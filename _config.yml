@@ -49,15 +49,15 @@ round-avatar: true
 social-network-links:
   email: harold3312@naver.com
   rss: true  # remove this line if you don't want to show an RSS link at the bottom
-  facebook: deanattali
-  github: daattali
-  twitter: daattali
-  patreon: DeanAttali
-  youtube: "@daattali"
-  whatsapp: 15551212
+#  facebook: deanattali
+  github: Githarold
+#  twitter: daattali
+#  patreon: DeanAttali
+  linkedin: seungheonlee1007
+  youtube: "@user-uc9ks4qq8m"
+#  whatsapp: 15551212
 #  medium: yourname
 #  reddit: yourname
-#  linkedin: daattali
 #  xing: yourname
 #  stackoverflow: "3943160/daattali"
 #  snapchat: deanat78
@@ -94,10 +94,6 @@ share-links-active:
   facebook: true
   linkedin: true
   vk: false
-
-# How to display the link to your website in the footer
-# Remove this if you don't want a link in the footer
-url-pretty: "MyWebsite.com"
 
 # Add the website title to the title of every page
 title-on-all-pages: true
