@@ -6,9 +6,8 @@ title: Resume
 <div id="pdf-viewer" style="width: 100%; height: 600px;"></div>
 
 <script>
-pdfjsLib.GlobalWorkerOptions.workerSrc = '/assets/js/pdfjs/pdf.worker.js';
-
-pdfjsLib.getDocument('/assets/pdf/resume.pdf').promise.then(function(pdf) {
+pdfjsLib.GlobalWorkerOptions.workerSrc = '{{ "/assets/js/pdfjs/pdf.worker.js" | relative_url }}';
+pdfjsLib.getDocument('{{ "/assets/pdf/resume.pdf" | relative_url }}').promise.then(function(pdf) {
   pdf.getPage(1).then(function(page) {
     var scale = 1.5;
     var viewport = page.getViewport({scale: scale});
