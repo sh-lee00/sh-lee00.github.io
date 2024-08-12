@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Flake it till you make it
+title: Flake 한국어 이승헌 여행 it till you make it
 subtitle: Excerpt from Soulshaping by Jeff Brown
 cover-img: /assets/img/path.jpg
 thumbnail-img: /assets/img/thumb.png
