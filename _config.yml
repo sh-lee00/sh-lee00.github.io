@@ -13,7 +13,7 @@
 title: Seungheon Lee
 
 # Your name to show in the footer
-author: 이승헌
+author: Seungheon Lee
 
 ###############################################
 # --- List of links in the navigation bar --- #
@@ -21,6 +21,7 @@ author: 이승헌
 
 navbar-links:
   About Me: "aboutme"
+  Resume: "resume"
   # Author's home: "https://deanattali.com"
 
 ################
@@ -285,6 +286,9 @@ exclude:
   - README.md
   - screenshot.png
   - docs/
+
+include:
+  - assets/js/pdfjs
 
 plugins:
   - jekyll-paginate
