@@ -6,13 +6,14 @@ title: About me
 
 # Seungheon Lee
 
+
 ### Professional Experience
 
 I recently completed an internship as a Software Engineer at the [S/W Innovation Center](https://research.samsung.com/software-engineering) of [Samsung Research](https://research.samsung.com/). During my time there, I built and deployed a monitoring system for LLM inference servers in a Kubernetes environment. This project was developed and implemented in the staging environment, making it ready for final testing before production release.
 
 ### Academic Background
 
-Prior to my internship, I was an undergraduate researcher at the [Robotics Lab](https://robotics.uos.ac.kr/) of the [University of Seoul](https://english.uos.ac.kr/). This experience allowed me to participate in various competitions, including:
+Prior to my internship, I was an undergraduate researcher at the [Robotics Lab](https://robotics.uos.ac.kr/) of the [University of Seoul](https://english.uos.ac.kr/). Throughout my academic journey, I maintained a major GPA of 4.35/4.5, which allowed me to engage in various research opportunities and competitions:
 
 - I authored three undergraduate research papers, contributing to the field of robotics and AI.
 
@@ -33,6 +34,7 @@ Throughout my academic career, I've worked on numerous AI-focused projects, incl
 These projects have helped me apply theoretical knowledge to practical, real-world scenarios.
 
 ### Skills
+
 
 - Kubernetes
 - LLM (Large Language Models)
