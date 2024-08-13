@@ -6,7 +6,6 @@ title: About me
 
 # Seungheon Lee
 
-
 ### Professional Experience
 
 I recently completed an internship as a Software Engineer at the [S/W Innovation Center](https://research.samsung.com/software-engineering) of [Samsung Research](https://research.samsung.com/). During my time there, I built and deployed a monitoring system for LLM inference servers in a Kubernetes environment. This project was developed and implemented in the staging environment, making it ready for final testing before production release.
@@ -17,9 +16,9 @@ Prior to my internship, I was an undergraduate researcher at the [Robotics Lab](
 
 - I authored three undergraduate research papers, contributing to the field of robotics and AI.
 
-- I participated in various competitions, including:
-  - [RoboCup](https://www.robocup.org/)
-  - Autonomous Robot Racing
+- I participated in and won awards in notable competitions:
+  - [RoboCup](https://www.robocup.org/): 1st place in the [ARM Challenge](https://arm.robocup.org/)
+  - Autonomous Robot Racing: Grand Prize and multiple Safety Driving Awards
 
 These experiences not only honed my technical skills and resulted in several awards, but also developed my ability to conduct research and present findings effectively.
 
@@ -35,13 +34,11 @@ These projects have helped me apply theoretical knowledge to practical, real-wor
 
 ### Skills
 
-
 - Kubernetes
 - LLM (Large Language Models)
 - Robotics
 - AI and Machine Learning
 - Reinforcement Learning
-
 
 ### Hobbies
 
