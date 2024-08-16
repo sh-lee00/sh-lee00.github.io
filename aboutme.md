@@ -44,6 +44,7 @@ These projects have helped me apply theoretical knowledge to practical, real-wor
 
 When I'm not coding or working on projects, you can find me:
 
+- Building a trading bot for quantitative investing
 - Playing League of Legends
 - Cycling around the city
 - Watching movies
