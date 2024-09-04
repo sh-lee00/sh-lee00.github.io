@@ -27,7 +27,7 @@ These experiences not only honed my technical skills and resulted in several awa
 Throughout my academic career, I've worked on numerous AI-focused projects, including:
 
 1. [Adaptive LAD for Pure-pursuit using Reinforcement Learning](https://github.com/Githarold/AdaptiveLAD-PurePursuitRL)
-2. [AI-powered Smart Bartending System](https://github.com/Githarold/BartendAiRtist)
+2. [AI-powered Smart Bartending System](https://github.com/Githarold/2024ESWContest_free_1078)
 3. [Automated Diet Management App](https://github.com/Githarold/NutriScan)
 
 These projects have helped me apply theoretical knowledge to practical, real-world scenarios.
