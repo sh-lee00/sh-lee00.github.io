@@ -24,11 +24,18 @@ These experiences not only honed my technical skills and resulted in several awa
 
 ### Projects
 
-Throughout my academic career, I've worked on numerous AI-focused projects, including:
+Throughout my academic career, I've worked on AI-focused projects, including:
 
-1. [Adaptive LAD for Pure-pursuit using Reinforcement Learning](https://github.com/Githarold/AdaptiveLAD-PurePursuitRL)
-2. [AI-powered Smart Bartending System](https://github.com/Githarold/2024ESWContest_free_1078)
-3. [Automated Diet Management App](https://github.com/Githarold/NutriScan)
+1. Computer Vision AI Model Optimization for NPU-based Inference (Ongoing until December 2024)
+   - Participating in the [1st AI Semiconductor Technology Talent Selection Competition](https://www.aichipcon.or.kr/)
+   - Collaborating with [Furiosa AI](https://furiosa.ai/) to develop efficient inference solutions optimized for their NPU architecture
+   - Focusing on maximizing performance and efficiency of computer vision AI models
+
+2. [Adaptive LAD for Pure-pursuit using Reinforcement Learning](https://github.com/Githarold/AdaptiveLAD-PurePursuitRL)
+
+3. [AI-powered Smart Bartending System](https://github.com/Githarold/2024ESWContest_free_1078)
+
+4. [Automated Diet Management App](https://github.com/Githarold/NutriScan)
 
 These projects have helped me apply theoretical knowledge to practical, real-world scenarios.
 
