@@ -24,7 +24,7 @@ These experiences not only honed my technical skills and resulted in several awa
 
 ### Projects
 
-Throughout my academic career, I've worked on AI-focused projects, including:
+I've worked on various AI-focused projects, including:
 
 1. Computer Vision AI Model Optimization for NPU-based Inference (Ongoing until December 2024)
    - Participating in the [1st AI Semiconductor Technology Talent Selection Competition](https://www.aichipcon.or.kr/)
@@ -46,6 +46,8 @@ These projects have helped me apply theoretical knowledge to practical, real-wor
 - Robotics
 - AI and Machine Learning
 - Reinforcement Learning
+- Computer Vision
+- AI Model Optimization
 
 ### Hobbies
 
