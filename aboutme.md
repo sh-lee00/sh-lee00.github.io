@@ -12,7 +12,7 @@ I recently completed an internship as a Software Engineer at the [S/W Innovation
 
 ### Academic Background
 
-Prior to my internship, I was an undergraduate researcher at the [Robotics Lab](https://robotics.uos.ac.kr/) of the [University of Seoul](https://english.uos.ac.kr/). Throughout my academic journey, I maintained a major GPA of 4.35/4.5, which allowed me to engage in various research opportunities and competitions:
+Prior to my internship, I was an undergraduate researcher at the [Robotics Lab](https://robotics.uos.ac.kr/) of the [University of Seoul](https://english.uos.ac.kr/). Throughout my academic journey, I've maintained the top academic performance in my department, ranking 1st out of 46 students with a major GPA of 4.35/4.5. This academic excellence has opened doors to various research opportunities and competitions:
 
 - I authored three undergraduate research papers, contributing to the field of robotics and AI.
 
