@@ -1,14 +1,14 @@
 ---
 layout: page
 title: About me
-subtitle: Mechanical engineer by degree, software rookie by choice
+subtitle: Learning, Building, and Growing in AI and Robotics
 ---
 
 # Seungheon Lee
 
 ### Current Status
 
-I joined the [Hyundai Motor Company](https://www.hyundai.co.kr/main/mainRecommend) R&D Center in January as a full-time Research Engineer (Project Manager for the Robotaxi Project). Previously, I completed an internship at the [S/W Innovation Center](https://research.samsung.com/software-engineering) of [Samsung Research](https://research.samsung.com/).
+I joined the [Hyundai Motor Company](https://www.hyundaimotorgroup.com/main/mainRecommend) R&D Center in January as a full-time Research Engineer (Project Manager for the Robotaxi Project). Previously, I completed an internship at the [S/W Innovation Center](https://research.samsung.com/software-engineering) of [Samsung Research](https://research.samsung.com/).
 
 ### Academic Background
 
@@ -18,8 +18,6 @@ Before Hyundai Motor, I was an undergraduate researcher at the [Robotics Lab](ht
 - Participated in and won awards in major robotics competitions:  
   - 1st place in the [RoboCup](https://www.robocup.org/) ARM Challenge  
   - Grand Prize and multiple Safety Driving Awards in Autonomous Robot Racing 
-
-These experiences not only honed my technical skills and resulted in several awards, but also developed my ability to conduct research and present findings effectively.
 
 ### Projects
 
@@ -36,8 +34,6 @@ I've worked on various AI-focused projects, including:
 3. [AI-powered Smart Bartending System](https://github.com/Githarold/2024ESWContest_free_1078)
 
 4. [Automated Diet Management App](https://github.com/Githarold/NutriScan)
-
-These projects have helped me apply theoretical knowledge to practical, real-world scenarios.
 
 ### Skills
 
