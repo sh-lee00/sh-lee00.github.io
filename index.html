@@ -608,8 +608,8 @@
         </div>
 
         <div class="cell reveal d1">
-          <h4>Previously · 2025</h4>
-          <p>Technical Project Manager at <a href="https://www.hyundaimotorgroup.com/main/mainRecommend" target="_blank" rel="noopener" style="color:var(--fg);border-bottom:1px solid var(--line)"><strong>Hyundai Motor Company</strong></a> R&amp;D Center. Led the <a href="https://www.hyundaimotorgroup.com/news/CONT0000000000161922" target="_blank" rel="noopener" style="color:var(--fg);border-bottom:1px solid var(--line)">Robotaxi production project</a> across a 600+ person program.</p>
+          <h4>Previously</h4>
+          <p>Technical PM at <a href="https://www.hyundaimotorgroup.com/main/mainRecommend" target="_blank" rel="noopener" style="color:var(--fg);border-bottom:1px solid var(--line)"><strong>Hyundai Motor Company</strong></a> R&amp;D (2025–26), leading the <a href="https://www.hyundaimotorgroup.com/news/CONT0000000000161922" target="_blank" rel="noopener" style="color:var(--fg);border-bottom:1px solid var(--line)">Robotaxi production project</a> across 600+ people. SWE Intern at <a href="https://research.samsung.com/" target="_blank" rel="noopener" style="color:var(--fg);border-bottom:1px solid var(--line)"><strong>Samsung Research</strong></a> (2024). Undergraduate researcher at the <a href="https://robotics.uos.ac.kr/" target="_blank" rel="noopener" style="color:var(--fg);border-bottom:1px solid var(--line)"><strong>Robotics Lab, UoS</strong></a> — graduated #1 of 46, GPA 4.35 / 4.5.</p>
         </div>
 
         <div class="cell reveal d2">
@@ -633,12 +633,7 @@
           </div>
         </div>
 
-        <div class="cell reveal">
-          <h4>Previously</h4>
-          <p>Software Engineer Intern at <a href="https://research.samsung.com/" target="_blank" rel="noopener" style="color:var(--fg);border-bottom:1px solid var(--line)"><strong>Samsung Research</strong></a>. Undergraduate researcher at the <a href="https://robotics.uos.ac.kr/" target="_blank" rel="noopener" style="color:var(--fg);border-bottom:1px solid var(--line)"><strong>Robotics Lab, University of Seoul</strong></a> — graduated #1 of 46, major GPA 4.35 / 4.5.</p>
-        </div>
-
-        <div class="cell reveal d1">
+        <div class="cell reveal d1" style="grid-column: 1 / -1; border-right: none; min-height: auto">
           <h4>Off-Hours</h4>
           <p>Building small websites for friends, watching films, and playing League of Legends — mostly League, honestly.</p>
         </div>
@@ -662,32 +657,91 @@
             <span class="badge">◆ featured</span>
             <span class="ex">github.com/Githarold ↗</span>
             <svg viewBox="0 0 780 220" xmlns="http://www.w3.org/2000/svg">
-              <rect class="node" x="40" y="70" width="150" height="80" rx="4"/>
-              <text class="lbl" x="115" y="105" text-anchor="middle">FP32 model</text>
-              <text class="lbl-dim" x="115" y="128" text-anchor="middle">cv backbone</text>
-
-              <line class="edge" x1="190" y1="110" x2="260" y2="110" marker-end="url(#arr)"/>
-
-              <rect class="node-a" x="260" y="70" width="180" height="80" rx="4"/>
-              <text class="lbl-a" x="350" y="105" text-anchor="middle">QUANTIZE</text>
-              <text class="lbl-dim" x="350" y="128" text-anchor="middle">+ calibrate</text>
-
-              <line class="edge" x1="440" y1="110" x2="510" y2="110" marker-end="url(#arr)"/>
-
-              <rect class="node" x="510" y="70" width="170" height="80" rx="4"/>
-              <text class="lbl" x="595" y="105" text-anchor="middle">INT8 NPU</text>
-              <text class="lbl-dim" x="595" y="128" text-anchor="middle">warboy inference</text>
-
-              <text class="lbl-dim" x="115" y="54" text-anchor="middle">01 — source</text>
-              <text class="lbl-dim" x="350" y="54" text-anchor="middle">02 — optimize</text>
-              <text class="lbl-dim" x="595" y="54" text-anchor="middle">03 — deploy</text>
-
-              <text class="lbl-a" x="595" y="188" text-anchor="middle">latency ↓ 4.2×</text>
               <defs>
-                <marker id="arr" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto">
-                  <path d="M0,0 L8,4 L0,8 Z" fill="currentColor" opacity="0.6"/>
+                <marker id="arr" markerWidth="8" markerHeight="8" refX="7" refY="3.5" orient="auto">
+                  <path d="M0,0 L7,3.5 L0,7 Z" fill="currentColor" opacity="0.55"/>
                 </marker>
               </defs>
+
+              <!-- stage headers -->
+              <text class="lbl-dim" x="110" y="18" text-anchor="middle">01 — source model</text>
+              <text class="lbl-dim" x="385" y="18" text-anchor="middle">02 — post-training quantize</text>
+              <text class="lbl-dim" x="645" y="18" text-anchor="middle">03 — warboy npu</text>
+
+              <!-- FP32 model: stacked layer blocks -->
+              <rect class="node" x="30" y="30" width="158" height="14" rx="2"/>
+              <text class="lbl-dim" x="109" y="41" text-anchor="middle">backbone · resnet50</text>
+              <rect class="node" x="30" y="48" width="158" height="14" rx="2"/>
+              <text class="lbl-dim" x="109" y="59" text-anchor="middle">conv 3×3 · 512 ch</text>
+              <rect class="node-a" x="30" y="66" width="158" height="14" rx="2"/>
+              <text class="lbl-dim" x="109" y="77" text-anchor="middle">detection head</text>
+              <rect class="node" x="30" y="84" width="158" height="14" rx="2"/>
+              <text class="lbl-dim" x="109" y="95" text-anchor="middle">fpn neck · 256 ch</text>
+              <rect class="node" x="30" y="102" width="158" height="14" rx="2"/>
+              <text class="lbl-dim" x="109" y="113" text-anchor="middle">roi head · cls + reg</text>
+              <text class="lbl" x="109" y="143" text-anchor="middle">FP32 · float</text>
+              <text class="lbl-dim" x="109" y="157" text-anchor="middle">pre-trained cv model</text>
+
+              <line class="edge" x1="188" y1="90" x2="248" y2="90" marker-end="url(#arr)"/>
+
+              <!-- Quantize box with dual histogram -->
+              <rect class="node-a" x="250" y="28" width="267" height="148" rx="4"/>
+              <text class="lbl-a" x="383" y="48" text-anchor="middle">QUANTIZE + CALIBRATE</text>
+
+              <text class="lbl-dim" x="268" y="64" text-anchor="start">fp32 dist</text>
+              <rect fill="currentColor" opacity="0.10" x="264" y="108" width="9" height="24"/>
+              <rect fill="currentColor" opacity="0.15" x="275" y="96" width="9" height="36"/>
+              <rect fill="currentColor" opacity="0.20" x="286" y="82" width="9" height="50"/>
+              <rect fill="currentColor" opacity="0.28" x="297" y="70" width="9" height="62"/>
+              <rect fill="currentColor" opacity="0.28" x="308" y="67" width="9" height="65"/>
+              <rect fill="currentColor" opacity="0.20" x="319" y="79" width="9" height="53"/>
+              <rect fill="currentColor" opacity="0.15" x="330" y="93" width="9" height="39"/>
+              <rect fill="currentColor" opacity="0.10" x="341" y="106" width="9" height="26"/>
+
+              <text class="lbl-dim" x="365" y="64" text-anchor="start">int8 mapped</text>
+              <rect fill="var(--accent)" opacity="0.15" x="363" y="116" width="9" height="16"/>
+              <rect fill="var(--accent)" opacity="0.25" x="374" y="98" width="9" height="34"/>
+              <rect fill="var(--accent)" opacity="0.40" x="385" y="80" width="9" height="52"/>
+              <rect fill="var(--accent)" opacity="0.55" x="396" y="67" width="9" height="65"/>
+              <rect fill="var(--accent)" opacity="0.40" x="407" y="77" width="9" height="55"/>
+              <rect fill="var(--accent)" opacity="0.25" x="418" y="95" width="9" height="37"/>
+              <rect fill="var(--accent)" opacity="0.15" x="429" y="113" width="9" height="19"/>
+              <line class="edge" x1="260" y1="134" x2="442" y2="134" opacity="0.2"/>
+
+              <text class="lbl-dim" x="383" y="153" text-anchor="middle">calibration · 1K samples · per-layer clip</text>
+              <text class="lbl-dim" x="383" y="167" text-anchor="middle">mAP loss &lt; 0.3%</text>
+
+              <line class="edge" x1="517" y1="90" x2="558" y2="90" marker-end="url(#arr)"/>
+
+              <!-- Warboy NPU: PE array grid + metrics -->
+              <rect class="node" x="560" y="28" width="190" height="148" rx="4"/>
+              <text class="lbl" x="655" y="48" text-anchor="middle">Furiosa Warboy NPU</text>
+              <text class="lbl-dim" x="576" y="66" text-anchor="start">PE array · 512 cores</text>
+
+              <rect class="node-a" x="576" y="70" width="14" height="14" rx="1"/>
+              <rect class="node-a" x="593" y="70" width="14" height="14" rx="1"/>
+              <rect class="node-a" x="610" y="70" width="14" height="14" rx="1"/>
+              <rect class="node-a" x="627" y="70" width="14" height="14" rx="1"/>
+              <rect class="node-a" x="576" y="88" width="14" height="14" rx="1"/>
+              <rect class="node-a" x="593" y="88" width="14" height="14" rx="1"/>
+              <rect class="node-a" x="610" y="88" width="14" height="14" rx="1"/>
+              <rect class="node"   x="627" y="88" width="14" height="14" rx="1"/>
+              <rect class="node-a" x="576" y="106" width="14" height="14" rx="1"/>
+              <rect class="node"   x="593" y="106" width="14" height="14" rx="1"/>
+              <rect class="node-a" x="610" y="106" width="14" height="14" rx="1"/>
+              <rect class="node-a" x="627" y="106" width="14" height="14" rx="1"/>
+              <rect class="node"   x="576" y="124" width="14" height="14" rx="1"/>
+              <rect class="node-a" x="593" y="124" width="14" height="14" rx="1"/>
+              <rect class="node-a" x="610" y="124" width="14" height="14" rx="1"/>
+              <rect class="node"   x="627" y="124" width="14" height="14" rx="1"/>
+
+              <text class="lbl-dim" x="652" y="78"  text-anchor="start">util   90%</text>
+              <text class="lbl-dim" x="652" y="96"  text-anchor="start">INT8   96%</text>
+              <text class="lbl-dim" x="652" y="114" text-anchor="start">2.8 TOPS</text>
+              <text class="lbl-dim" x="652" y="132" text-anchor="start">8W TDP</text>
+              <text class="lbl" x="655" y="158" text-anchor="middle">INT8 inference</text>
+
+              <text class="lbl-a" x="655" y="200" text-anchor="middle">latency ↓ 4.2×  ·  NPU util ↑ 5.33×</text>
             </svg>
           </div>
           <div class="body">
@@ -938,23 +992,50 @@
             <span class="badge">rl · controls</span>
             <span class="ex">↗</span>
             <svg viewBox="0 0 520 220" xmlns="http://www.w3.org/2000/svg">
-              <path class="edge" d="M60 140 Q 200 40, 460 90"/>
-              <circle cx="60" cy="140" r="8" class="node-a"/>
-              <text class="lbl" x="60" y="170" text-anchor="middle">vehicle</text>
-              <circle cx="460" cy="90" r="6" class="node"/>
-              <text class="lbl-dim" x="460" y="76" text-anchor="middle">t+1</text>
-
-              <rect class="node-a" x="200" y="125" width="120" height="48" rx="4"/>
-              <text class="lbl-a" x="260" y="155" text-anchor="middle">RL agent</text>
-
-              <line class="edge-a" x1="85" y1="148" x2="200" y2="149"/>
-              <line class="edge-a" x1="320" y1="149" x2="440" y2="100" marker-end="url(#arr2)"/>
-              <text class="lbl-dim" x="400" y="140">adaptive LAD</text>
               <defs>
-                <marker id="arr2" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto">
-                  <path d="M0,0 L8,4 L0,8 Z" fill="currentColor" opacity="0.6"/>
+                <marker id="arr2" markerWidth="8" markerHeight="8" refX="7" refY="3.5" orient="auto">
+                  <path d="M0,0 L7,3.5 L0,7 Z" fill="currentColor" opacity="0.55"/>
                 </marker>
               </defs>
+
+              <!-- Track road (two parallel curves) -->
+              <path class="edge" d="M18 190 Q110 184 176 152 Q252 114 366 98 Q432 92 510 94" stroke-width="2.5" opacity="0.35"/>
+              <path class="edge" d="M22 176 Q112 170 178 140 Q254 102 368 86 Q434 80 510 81" opacity="0.14"/>
+
+              <!-- Vehicle (ego) -->
+              <g transform="translate(128, 160)">
+                <rect class="node-a" x="-17" y="-11" width="34" height="22" rx="3"/>
+                <text class="lbl-a" x="0" y="6" text-anchor="middle" font-size="9">ego</text>
+              </g>
+
+              <!-- Look-ahead circle (key pure pursuit concept) -->
+              <circle cx="128" cy="160" r="68" fill="none" stroke="var(--accent-2)" stroke-width="1" stroke-dasharray="5 3" opacity="0.38"/>
+
+              <!-- Lookahead target point -->
+              <circle cx="184" cy="106" r="5" class="node-a"/>
+              <line class="edge-a" x1="128" y1="160" x2="180" y2="111" stroke-dasharray="3 2" opacity="0.65"/>
+              <text class="lbl-a" x="144" y="142" font-size="10" text-anchor="start">LAD</text>
+              <text class="lbl-dim" x="184" y="96" text-anchor="middle">target pt</text>
+
+              <!-- RL Agent box -->
+              <rect class="node-a" x="286" y="84" width="192" height="100" rx="4"/>
+              <text class="lbl-a" x="382" y="106" text-anchor="middle">RL Agent</text>
+              <text class="lbl-dim" x="382" y="123" text-anchor="middle">obs: speed · curvature</text>
+              <text class="lbl-dim" x="382" y="138" text-anchor="middle">obs: cross-track error</text>
+              <text class="lbl-dim" x="382" y="153" text-anchor="middle">act: Δ LAD</text>
+              <text class="lbl-dim" x="382" y="168" text-anchor="middle">reward: path-tracking acc.</text>
+
+              <!-- State → RL arrow -->
+              <path class="edge-a" d="M163 152 Q224 106 286 118" marker-end="url(#arr2)"/>
+              <text class="lbl-dim" x="224" y="118" text-anchor="middle">state</text>
+
+              <!-- LAD output loop -->
+              <path class="edge-a" d="M382 184 Q382 208 128 210 Q68 210 68 178" marker-end="url(#arr2)"/>
+              <text class="lbl-dim" x="242" y="214" text-anchor="middle">adaptive LAD → pure-pursuit controller</text>
+
+              <!-- Context labels top-left -->
+              <text class="lbl-dim" x="28" y="22" text-anchor="start">variable curvature track</text>
+              <text class="lbl-dim" x="28" y="38" text-anchor="start">speed: 1 – 8 m/s</text>
             </svg>
           </div>
           <div class="body">
@@ -1031,24 +1112,64 @@
             <span class="badge">mobile · cv</span>
             <span class="ex">↗</span>
             <svg viewBox="0 0 340 200" xmlns="http://www.w3.org/2000/svg">
-              <rect class="node" x="30" y="70" width="70" height="60" rx="4"/>
-              <text class="lbl-dim" x="65" y="95" text-anchor="middle">scan</text>
-              <text class="lbl" x="65" y="115" text-anchor="middle">meal</text>
-
-              <rect class="node-a" x="135" y="70" width="75" height="60" rx="4"/>
-              <text class="lbl-a" x="172" y="105" text-anchor="middle">detect</text>
-
-              <rect class="node" x="245" y="70" width="70" height="60" rx="4"/>
-              <text class="lbl" x="280" y="105" text-anchor="middle">log</text>
-
-              <line class="edge" x1="100" y1="100" x2="135" y2="100" marker-end="url(#arrT)"/>
-              <line class="edge" x1="210" y1="100" x2="245" y2="100" marker-end="url(#arrT)"/>
-              <path class="edge-a" d="M280 130 Q 280 165, 172 165 Q 65 165, 65 135" marker-end="url(#arrT)"/>
               <defs>
-                <marker id="arrT" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto">
-                  <path d="M0,0 L8,4 L0,8 Z" fill="currentColor" opacity="0.6"/>
+                <marker id="arrN" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto">
+                  <path d="M0,0 L6,3.5 L0,7 Z" fill="currentColor" opacity="0.55"/>
                 </marker>
               </defs>
+
+              <!-- Phone silhouette -->
+              <rect class="node" x="10" y="26" width="66" height="110" rx="7"/>
+              <rect class="node" x="18" y="36" width="50" height="60" rx="2"/>
+              <!-- detection bboxes on screen -->
+              <rect class="node-a" x="20" y="38" width="22" height="22" rx="1"/>
+              <text class="lbl-a" x="31" y="50" text-anchor="middle" font-size="7">✓</text>
+              <rect x="44" y="48" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1" opacity="0.45"/>
+              <!-- home button -->
+              <circle cx="43" cy="120" r="6" class="node"/>
+              <text class="lbl-dim" x="43" y="152" text-anchor="middle">scan</text>
+
+              <line class="edge" x1="76" y1="82" x2="96" y2="82" marker-end="url(#arrN)"/>
+
+              <!-- YOLOv8 detection stage -->
+              <rect class="node-a" x="98" y="48" width="84" height="68" rx="3"/>
+              <text class="lbl-a" x="140" y="68" text-anchor="middle">YOLOv8</text>
+              <text class="lbl-dim" x="140" y="85" text-anchor="middle">rice    0.94</text>
+              <text class="lbl-dim" x="140" y="99" text-anchor="middle">kimchi  0.88</text>
+              <text class="lbl-dim" x="140" y="113" text-anchor="middle">egg     0.91</text>
+              <text class="lbl-dim" x="140" y="150" text-anchor="middle">detect</text>
+
+              <line class="edge" x1="182" y1="82" x2="202" y2="82" marker-end="url(#arrN)"/>
+
+              <!-- Nutrition log with mini bar chart -->
+              <rect class="node" x="204" y="26" width="124" height="110" rx="4"/>
+              <text class="lbl" x="266" y="46" text-anchor="middle">daily log</text>
+
+              <text class="lbl-dim" x="214" y="63" text-anchor="start">kcal</text>
+              <rect class="node" x="244" y="56" width="72" height="8" rx="2"/>
+              <rect fill="var(--accent)" opacity="0.5" x="244" y="56" width="52" height="8" rx="2"/>
+              <text class="lbl-dim" x="318" y="63" text-anchor="end">520</text>
+
+              <text class="lbl-dim" x="214" y="80" text-anchor="start">protein</text>
+              <rect class="node" x="244" y="73" width="72" height="8" rx="2"/>
+              <rect fill="var(--accent)" opacity="0.5" x="244" y="73" width="30" height="8" rx="2"/>
+              <text class="lbl-dim" x="318" y="80" text-anchor="end">18g</text>
+
+              <text class="lbl-dim" x="214" y="97" text-anchor="start">carbs</text>
+              <rect class="node" x="244" y="90" width="72" height="8" rx="2"/>
+              <rect fill="var(--accent)" opacity="0.5" x="244" y="90" width="60" height="8" rx="2"/>
+              <text class="lbl-dim" x="318" y="97" text-anchor="end">72g</text>
+
+              <text class="lbl-dim" x="214" y="114" text-anchor="start">fat</text>
+              <rect class="node" x="244" y="107" width="72" height="8" rx="2"/>
+              <rect fill="var(--accent)" opacity="0.5" x="244" y="107" width="22" height="8" rx="2"/>
+              <text class="lbl-dim" x="318" y="114" text-anchor="end">12g</text>
+
+              <text class="lbl-dim" x="266" y="150" text-anchor="middle">automated log</text>
+
+              <!-- Daily feedback loop -->
+              <path class="edge-a" d="M266 136 Q266 172 140 172 Q58 172 43 140" marker-end="url(#arrN)"/>
+              <text class="lbl-dim" x="162" y="185" text-anchor="middle">daily tracking loop</text>
             </svg>
           </div>
           <div class="body">
@@ -1063,12 +1184,35 @@
           <div class="art">
             <span class="badge">papers</span>
             <svg viewBox="0 0 340 200" xmlns="http://www.w3.org/2000/svg">
-              <rect class="node" x="60" y="45" width="220" height="34" rx="3"/>
-              <text class="lbl" x="72" y="67">[1]  KRoC · handle grasp pose</text>
-              <rect class="node-a" x="60" y="92" width="220" height="34" rx="3"/>
-              <text class="lbl-a" x="72" y="114">[2]  ICROS · singularity viz</text>
-              <rect class="node" x="60" y="139" width="220" height="34" rx="3"/>
-              <text class="lbl" x="72" y="161">[3]  KIBME · LoRA illustrations</text>
+              <!-- Paper nodes (left) -->
+              <rect class="node" x="8" y="16" width="168" height="38" rx="3"/>
+              <text class="lbl" x="18" y="34" text-anchor="start">[1] KRoC 2024</text>
+              <text class="lbl-dim" x="18" y="48" text-anchor="start">grasp pose · deep learning</text>
+
+              <rect class="node-a" x="8" y="81" width="168" height="38" rx="3"/>
+              <text class="lbl-a" x="18" y="99" text-anchor="start">[2] ICROS 2023</text>
+              <text class="lbl-dim" x="18" y="113" text-anchor="start">singularity viz · monte carlo</text>
+
+              <rect class="node" x="8" y="146" width="168" height="38" rx="3"/>
+              <text class="lbl" x="18" y="164" text-anchor="start">[3] KIBME 2024</text>
+              <text class="lbl-dim" x="18" y="178" text-anchor="start">LoRA · stable diffusion</text>
+
+              <!-- Topic nodes (right) -->
+              <rect class="node" x="226" y="16" width="106" height="26" rx="3"/>
+              <text class="lbl-dim" x="279" y="33" text-anchor="middle">manipulation</text>
+
+              <rect class="node-a" x="226" y="87" width="106" height="26" rx="3"/>
+              <text class="lbl-a" x="279" y="104" text-anchor="middle">robotics · control</text>
+
+              <rect class="node" x="226" y="158" width="106" height="26" rx="3"/>
+              <text class="lbl-dim" x="279" y="175" text-anchor="middle">generative AI</text>
+
+              <!-- Cross-edges (papers → topics) -->
+              <line class="edge" x1="176" y1="35" x2="226" y2="29"/>
+              <line class="edge-a" x1="176" y1="35" x2="226" y2="100"/>
+              <line class="edge-a" x1="176" y1="100" x2="226" y2="100"/>
+              <line class="edge" x1="176" y1="100" x2="226" y2="29"/>
+              <line class="edge" x1="176" y1="165" x2="226" y2="171"/>
             </svg>
           </div>
           <div class="body">
@@ -1087,10 +1231,48 @@
           <div class="art" style="background:var(--bg-2)">
             <span class="badge">open</span>
             <svg viewBox="0 0 340 200" xmlns="http://www.w3.org/2000/svg">
-              <rect class="node-a" x="60" y="50" width="220" height="100" rx="4" stroke-dasharray="4 4"/>
-              <line class="edge-a" x1="170" y1="80" x2="170" y2="120"/>
-              <line class="edge-a" x1="150" y1="100" x2="190" y2="100"/>
-              <text class="lbl-a" x="170" y="175" text-anchor="middle">new project</text>
+              <defs>
+                <marker id="arrC" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto">
+                  <path d="M0,0 L6,3.5 L0,7 Z" fill="currentColor" opacity="0.55"/>
+                </marker>
+              </defs>
+
+              <!-- You (open, dashed) -->
+              <circle cx="40" cy="100" r="26" fill="none" stroke="currentColor" stroke-width="1" stroke-dasharray="4 3" opacity="0.48"/>
+              <text class="lbl-dim" x="40" y="96" text-anchor="middle">you</text>
+              <text class="lbl-dim" x="40" y="112" text-anchor="middle">?</text>
+
+              <!-- Connection -->
+              <line class="edge-a" x1="66" y1="100" x2="128" y2="100" marker-end="url(#arrC)" stroke-dasharray="4 3"/>
+              <text class="lbl-a" x="97" y="92" text-anchor="middle">+</text>
+
+              <!-- Seungheon center -->
+              <circle cx="158" cy="100" r="28" fill="oklch(0.86 0.18 138 / .10)" stroke="var(--accent-2)" stroke-width="1"/>
+              <text class="lbl-a" x="158" y="97" text-anchor="middle">S.Lee</text>
+              <text class="lbl-dim" x="158" y="112" text-anchor="middle">AE · AI</text>
+
+              <!-- Topic nodes -->
+              <rect class="node-a" x="212" y="10"  width="116" height="22" rx="3"/>
+              <text class="lbl-dim" x="270" y="25"  text-anchor="middle">perception</text>
+
+              <rect class="node"   x="214" y="48"  width="112" height="22" rx="3"/>
+              <text class="lbl-dim" x="270" y="63"  text-anchor="middle">edge inference</text>
+
+              <rect class="node"   x="216" y="89"  width="110" height="22" rx="3"/>
+              <text class="lbl-dim" x="271" y="104" text-anchor="middle">autonomy tools</text>
+
+              <rect class="node"   x="214" y="130" width="112" height="22" rx="3"/>
+              <text class="lbl-dim" x="270" y="145" text-anchor="middle">robotics · control</text>
+
+              <rect class="node"   x="214" y="168" width="112" height="22" rx="3"/>
+              <text class="lbl-dim" x="270" y="183" text-anchor="middle">applied AI research</text>
+
+              <!-- Edges to topics -->
+              <line class="edge" x1="184" y1="76" x2="212" y2="24"/>
+              <line class="edge" x1="186" y1="86" x2="214" y2="58"/>
+              <line class="edge" x1="186" y1="100" x2="216" y2="100"/>
+              <line class="edge" x1="186" y1="114" x2="214" y2="138"/>
+              <line class="edge" x1="184" y1="122" x2="212" y2="174"/>
             </svg>
           </div>
           <div class="body">
