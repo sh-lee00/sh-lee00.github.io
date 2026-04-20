@@ -506,6 +506,12 @@
     .ch{grid-template-columns:70px 1fr auto;gap:10px}
     /* stack CTA buttons vertically so none wrap */
     .cta-row{flex-direction:column;align-items:flex-start;gap:8px}
+    /* section header: hide meta label so title stays single line */
+    .sec-meta{display:none}
+    /* resume tabs: scrollable row so .md names don't clip */
+    .res-tabs{overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;flex-wrap:nowrap}
+    .res-tabs::-webkit-scrollbar{display:none}
+    .res-tabs button{flex-shrink:0}
   }
 </style>
 </head>
@@ -559,12 +565,13 @@
           <div class="eyebrow reveal">Application Engineer · Physical AI · Applied Intuition</div>
           <h2 class="name reveal d1">Seungheon<br><span class="last">Lee.</span></h2>
           <p class="kicker reveal d2">
-            Application Engineer at <em><a href="https://www.appliedintuition.com/" target="_blank" rel="noopener" style="color:var(--accent);border-bottom:1px solid currentColor">Applied Intuition</a></em> (Seoul).
-            Collaborating with autonomy developers to design scalable software solutions,
-            adapting products to accelerate customer's <em>Physical AI</em> and autonomous
-            mobility initiatives. Previously Technical PM on the Robotaxi production
-            program at <em><a href="https://www.hyundaimotorgroup.com/main/mainRecommend" target="_blank" rel="noopener" style="color:var(--accent);border-bottom:1px solid currentColor">Hyundai Motor Company</a></em> R&amp;D Center,
-            and SWE intern at <em><a href="https://research.samsung.com/" target="_blank" rel="noopener" style="color:var(--accent);border-bottom:1px solid currentColor">Samsung Research</a></em>.
+            Mechanical &amp; information engineering background — spent time in a robotics
+            lab before drifting fully into software. Now an Application Engineer at
+            <em><a href="https://www.appliedintuition.com/" target="_blank" rel="noopener" style="color:var(--accent);border-bottom:1px solid currentColor">Applied Intuition</a></em> (Seoul),
+            working with autonomy teams on <em>Physical AI</em> and autonomous mobility.
+            Genuine enthusiast of AI tooling — always have a new model or agent workflow
+            running. Previously at <em><a href="https://www.hyundaimotorgroup.com/main/mainRecommend" target="_blank" rel="noopener" style="color:var(--accent);border-bottom:1px solid currentColor">Hyundai Motor Company</a></em> R&amp;D
+            (Robotaxi program) and <em><a href="https://research.samsung.com/" target="_blank" rel="noopener" style="color:var(--accent);border-bottom:1px solid currentColor">Samsung Research</a></em>.
           </p>
           <div class="cta-row reveal d3">
             <a class="btn primary" href="#projects">
@@ -1251,12 +1258,12 @@
             <a class="ch" href="https://github.com/Githarold" target="_blank" rel="noopener">
               <span class="label">github</span>
               <span class="val">github.com/Githarold</span>
-              <span class="arr">↗</span>
+              <span class="arr">→</span>
             </a>
-            <a class="ch" href="https://www.linkedin.com/in/c9lee" target="_blank" rel="noopener">
+            <a class="ch" href="https://www.linkedin.com/in/s7n-lee" target="_blank" rel="noopener">
               <span class="label">linkedin</span>
-              <span class="val">linkedin.com/in/c9lee</span>
-              <span class="arr">↗</span>
+              <span class="val">linkedin.com/in/s7n-lee</span>
+              <span class="arr">→</span>
             </a>
           </div>
         </div>
