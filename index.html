@@ -622,18 +622,6 @@
         </div>
 
         <div class="cell reveal d3">
-          <h4>Toolchain</h4>
-          <div class="pills">
-            <span class="pill">Python</span><span class="pill">C / C++</span>
-            <span class="pill">PyTorch</span><span class="pill">OpenCV</span>
-            <span class="pill">Linux</span><span class="pill">Kubernetes</span>
-            <span class="pill">MATLAB</span><span class="pill">ROS</span>
-            <span class="pill">Grafana</span><span class="pill">W&amp;B</span>
-            <span class="pill">LiDAR</span><span class="pill">RGB-D</span>
-          </div>
-        </div>
-
-        <div class="cell reveal d1" style="grid-column: 1 / -1; border-right: none; min-height: auto">
           <h4>Off-Hours</h4>
           <p>Building small websites for friends, watching films, and playing League of Legends — mostly League, honestly.</p>
         </div>
@@ -998,44 +986,35 @@
                 </marker>
               </defs>
 
-              <!-- Track road (two parallel curves) -->
-              <path class="edge" d="M18 190 Q110 184 176 152 Q252 114 366 98 Q432 92 510 94" stroke-width="2.5" opacity="0.35"/>
-              <path class="edge" d="M22 176 Q112 170 178 140 Q254 102 368 86 Q434 80 510 81" opacity="0.14"/>
+              <!-- Reference track -->
+              <path class="edge" d="M22 178 Q100 172 165 144 Q240 110 360 100 Q430 96 510 97" stroke-width="2" opacity="0.35"/>
 
               <!-- Vehicle (ego) -->
-              <g transform="translate(128, 160)">
-                <rect class="node-a" x="-17" y="-11" width="34" height="22" rx="3"/>
-                <text class="lbl-a" x="0" y="6" text-anchor="middle" font-size="9">ego</text>
-              </g>
+              <rect class="node-a" x="112" y="142" width="36" height="20" rx="3"/>
+              <text class="lbl-a" x="130" y="156" text-anchor="middle" font-size="9">ego</text>
 
-              <!-- Look-ahead circle (key pure pursuit concept) -->
-              <circle cx="128" cy="160" r="68" fill="none" stroke="var(--accent-2)" stroke-width="1" stroke-dasharray="5 3" opacity="0.38"/>
+              <!-- Target lookahead point -->
+              <circle cx="262" cy="106" r="6" class="node-a"/>
+              <text class="lbl-dim" x="262" y="94" text-anchor="middle">target</text>
 
-              <!-- Lookahead target point -->
-              <circle cx="184" cy="106" r="5" class="node-a"/>
-              <line class="edge-a" x1="128" y1="160" x2="180" y2="111" stroke-dasharray="3 2" opacity="0.65"/>
-              <text class="lbl-a" x="144" y="142" font-size="10" text-anchor="start">LAD</text>
-              <text class="lbl-dim" x="184" y="96" text-anchor="middle">target pt</text>
+              <!-- LAD: dashed line vehicle → target -->
+              <line class="edge-a" x1="148" y1="148" x2="258" y2="112" stroke-dasharray="5 3"/>
+              <text class="lbl-a" x="195" y="122" text-anchor="middle">LAD</text>
 
-              <!-- RL Agent box -->
-              <rect class="node-a" x="286" y="84" width="192" height="100" rx="4"/>
-              <text class="lbl-a" x="382" y="106" text-anchor="middle">RL Agent</text>
-              <text class="lbl-dim" x="382" y="123" text-anchor="middle">obs: speed · curvature</text>
-              <text class="lbl-dim" x="382" y="138" text-anchor="middle">obs: cross-track error</text>
-              <text class="lbl-dim" x="382" y="153" text-anchor="middle">act: Δ LAD</text>
-              <text class="lbl-dim" x="382" y="168" text-anchor="middle">reward: path-tracking acc.</text>
+              <!-- RL Agent -->
+              <rect class="node-a" x="298" y="68" width="196" height="96" rx="4"/>
+              <text class="lbl-a" x="396" y="90" text-anchor="middle">RL Agent</text>
+              <text class="lbl-dim" x="396" y="108" text-anchor="middle">obs: speed · curvature · error</text>
+              <text class="lbl-dim" x="396" y="124" text-anchor="middle">act: Δ look-ahead dist.</text>
+              <text class="lbl-dim" x="396" y="140" text-anchor="middle">reward: tracking accuracy</text>
 
-              <!-- State → RL arrow -->
-              <path class="edge-a" d="M163 152 Q224 106 286 118" marker-end="url(#arr2)"/>
-              <text class="lbl-dim" x="224" y="118" text-anchor="middle">state</text>
+              <!-- State → RL -->
+              <path class="edge-a" d="M272 104 Q285 86 298 96" marker-end="url(#arr2)"/>
+              <text class="lbl-dim" x="286" y="82" text-anchor="middle">state</text>
 
               <!-- LAD output loop -->
-              <path class="edge-a" d="M382 184 Q382 208 128 210 Q68 210 68 178" marker-end="url(#arr2)"/>
-              <text class="lbl-dim" x="242" y="214" text-anchor="middle">adaptive LAD → pure-pursuit controller</text>
-
-              <!-- Context labels top-left -->
-              <text class="lbl-dim" x="28" y="22" text-anchor="start">variable curvature track</text>
-              <text class="lbl-dim" x="28" y="38" text-anchor="start">speed: 1 – 8 m/s</text>
+              <path class="edge-a" d="M396 164 Q396 192 130 194 Q74 194 74 165" marker-end="url(#arr2)"/>
+              <text class="lbl-dim" x="242" y="208" text-anchor="middle">adapted LAD → pure-pursuit controller</text>
             </svg>
           </div>
           <div class="body">
@@ -1118,58 +1097,46 @@
                 </marker>
               </defs>
 
-              <!-- Phone silhouette -->
-              <rect class="node" x="10" y="26" width="66" height="110" rx="7"/>
-              <rect class="node" x="18" y="36" width="50" height="60" rx="2"/>
-              <!-- detection bboxes on screen -->
-              <rect class="node-a" x="20" y="38" width="22" height="22" rx="1"/>
-              <text class="lbl-a" x="31" y="50" text-anchor="middle" font-size="7">✓</text>
-              <rect x="44" y="48" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1" opacity="0.45"/>
-              <!-- home button -->
-              <circle cx="43" cy="120" r="6" class="node"/>
-              <text class="lbl-dim" x="43" y="152" text-anchor="middle">scan</text>
+              <!-- Camera icon (centered ~x=46) -->
+              <rect class="node" x="14" y="58" width="64" height="50" rx="5"/>
+              <rect class="node" x="26" y="52" width="20" height="8" rx="2"/>
+              <circle cx="46" cy="83" r="17" class="node"/>
+              <circle cx="46" cy="83" r="9" class="node-a"/>
+              <text class="lbl-dim" x="46" y="125" text-anchor="middle">scan</text>
 
-              <line class="edge" x1="76" y1="82" x2="96" y2="82" marker-end="url(#arrN)"/>
+              <line class="edge" x1="78" y1="83" x2="98" y2="83" marker-end="url(#arrN)"/>
 
-              <!-- YOLOv8 detection stage -->
-              <rect class="node-a" x="98" y="48" width="84" height="68" rx="3"/>
-              <text class="lbl-a" x="140" y="68" text-anchor="middle">YOLOv8</text>
-              <text class="lbl-dim" x="140" y="85" text-anchor="middle">rice    0.94</text>
-              <text class="lbl-dim" x="140" y="99" text-anchor="middle">kimchi  0.88</text>
-              <text class="lbl-dim" x="140" y="113" text-anchor="middle">egg     0.91</text>
-              <text class="lbl-dim" x="140" y="150" text-anchor="middle">detect</text>
+              <!-- Detection bboxes -->
+              <rect class="node" x="100" y="52" width="86" height="62" rx="3"/>
+              <rect class="node-a" x="106" y="58" width="28" height="24" rx="1"/>
+              <text class="lbl-a" x="120" y="70" text-anchor="middle" font-size="8">rice</text>
+              <rect x="140" y="64" width="26" height="22" fill="none" stroke="currentColor" stroke-width="1" opacity="0.42"/>
+              <text class="lbl-dim" x="153" y="76" text-anchor="middle" font-size="8">side</text>
+              <text class="lbl-dim" x="143" y="125" text-anchor="middle">YOLOv8</text>
 
-              <line class="edge" x1="182" y1="82" x2="202" y2="82" marker-end="url(#arrN)"/>
+              <line class="edge" x1="186" y1="83" x2="208" y2="83" marker-end="url(#arrN)"/>
 
-              <!-- Nutrition log with mini bar chart -->
-              <rect class="node" x="204" y="26" width="124" height="110" rx="4"/>
-              <text class="lbl" x="266" y="46" text-anchor="middle">daily log</text>
+              <!-- Nutrition log -->
+              <rect class="node" x="210" y="46" width="118" height="78" rx="3"/>
+              <text class="lbl" x="269" y="65" text-anchor="middle">log entry</text>
 
-              <text class="lbl-dim" x="214" y="63" text-anchor="start">kcal</text>
-              <rect class="node" x="244" y="56" width="72" height="8" rx="2"/>
-              <rect fill="var(--accent)" opacity="0.5" x="244" y="56" width="52" height="8" rx="2"/>
-              <text class="lbl-dim" x="318" y="63" text-anchor="end">520</text>
+              <text class="lbl-dim" x="220" y="82" text-anchor="start">kcal</text>
+              <rect class="node" x="248" y="75" width="70" height="7" rx="2"/>
+              <rect fill="var(--accent)" opacity="0.55" x="248" y="75" width="50" height="7" rx="2"/>
 
-              <text class="lbl-dim" x="214" y="80" text-anchor="start">protein</text>
-              <rect class="node" x="244" y="73" width="72" height="8" rx="2"/>
-              <rect fill="var(--accent)" opacity="0.5" x="244" y="73" width="30" height="8" rx="2"/>
-              <text class="lbl-dim" x="318" y="80" text-anchor="end">18g</text>
+              <text class="lbl-dim" x="220" y="98" text-anchor="start">protein</text>
+              <rect class="node" x="248" y="91" width="70" height="7" rx="2"/>
+              <rect fill="var(--accent)" opacity="0.55" x="248" y="91" width="28" height="7" rx="2"/>
 
-              <text class="lbl-dim" x="214" y="97" text-anchor="start">carbs</text>
-              <rect class="node" x="244" y="90" width="72" height="8" rx="2"/>
-              <rect fill="var(--accent)" opacity="0.5" x="244" y="90" width="60" height="8" rx="2"/>
-              <text class="lbl-dim" x="318" y="97" text-anchor="end">72g</text>
+              <text class="lbl-dim" x="220" y="114" text-anchor="start">carbs</text>
+              <rect class="node" x="248" y="107" width="70" height="7" rx="2"/>
+              <rect fill="var(--accent)" opacity="0.55" x="248" y="107" width="56" height="7" rx="2"/>
 
-              <text class="lbl-dim" x="214" y="114" text-anchor="start">fat</text>
-              <rect class="node" x="244" y="107" width="72" height="8" rx="2"/>
-              <rect fill="var(--accent)" opacity="0.5" x="244" y="107" width="22" height="8" rx="2"/>
-              <text class="lbl-dim" x="318" y="114" text-anchor="end">12g</text>
+              <text class="lbl-dim" x="269" y="140" text-anchor="middle">automated log</text>
 
-              <text class="lbl-dim" x="266" y="150" text-anchor="middle">automated log</text>
-
-              <!-- Daily feedback loop -->
-              <path class="edge-a" d="M266 136 Q266 172 140 172 Q58 172 43 140" marker-end="url(#arrN)"/>
-              <text class="lbl-dim" x="162" y="185" text-anchor="middle">daily tracking loop</text>
+              <!-- Feedback loop -->
+              <path class="edge-a" d="M269 124 Q269 162 143 164 Q60 164 46 128" marker-end="url(#arrN)"/>
+              <text class="lbl-dim" x="162" y="178" text-anchor="middle">daily tracking loop</text>
             </svg>
           </div>
           <div class="body">
