@@ -1,5 +1,1227 @@
----
-layout: home
-title: Welcome!
-subtitle: Passionate about practical AI applications.
----
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Seungheon Lee — Application Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;600&display=swap">
+<style>
+  :root{
+    /* palette — cool near-black */
+    --bg:        oklch(0.145 0.010 255);
+    --bg-2:      oklch(0.175 0.012 255);
+    --bg-3:      oklch(0.205 0.013 255);
+    --line:      oklch(0.28  0.012 255);
+    --line-soft: oklch(0.22  0.012 255);
+    --fg:        oklch(0.94  0.008 255);
+    --fg-2:      oklch(0.78  0.010 255);
+    --fg-3:      oklch(0.58  0.012 255);
+    --fg-4:      oklch(0.42  0.012 255);
+    --accent:    oklch(0.86  0.180 138);
+    --accent-2:  oklch(0.72  0.160 138);
+    --warn:      oklch(0.82  0.150 70);
+    --danger:    oklch(0.70  0.180 25);
+
+    --mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+    --sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+
+    --col: 72px;
+    --gutter: 24px;
+    --radius: 4px;
+
+    --t: cubic-bezier(.2,.7,.2,1);
+  }
+
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:var(--bg);color:var(--fg);font-family:var(--sans);font-size:15px;line-height:1.55;-webkit-font-smoothing:antialiased}
+  body{
+    min-height:100vh;
+    background-image:
+      linear-gradient(var(--line-soft) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line-soft) 1px, transparent 1px);
+    background-size: 48px 48px;
+    background-position: -1px -1px;
+    background-attachment: fixed;
+  }
+  body::before{
+    content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
+    background:
+      radial-gradient(ellipse 80% 60% at 50% 0%, oklch(0.22 0.02 255 / .5), transparent 60%),
+      radial-gradient(ellipse 60% 50% at 80% 100%, oklch(0.20 0.03 138 / .18), transparent 60%);
+  }
+
+  a{color:inherit;text-decoration:none}
+  ::selection{background:var(--accent);color:var(--bg)}
+
+  /* ——— Layout shell ——— */
+  .shell{
+    position:relative;z-index:1;
+    display:block;
+    min-height:100vh;
+  }
+
+  /* ——— Top header (formerly sidebar) ——— */
+  header.topbar{
+    position:sticky;top:0;z-index:20;
+    background:oklch(0.14 0.01 255 / .88);
+    backdrop-filter: blur(12px);
+    border-bottom:1px solid var(--line);
+    transition: padding .3s var(--t);
+  }
+  .topbar-inner{
+    max-width:1240px;margin:0 auto;
+    padding:16px 56px;
+    display:flex;align-items:center;gap:20px;
+    transition:padding .5s cubic-bezier(.4,0,.2,1);
+  }
+  .topbar.compact .topbar-inner{padding:10px 56px 10px 56px}
+  /* push nav toward center when compact by widening right padding-like spacer via brand */
+  .topbar .brand{display:flex;align-items:center;gap:12px;margin:0;flex-shrink:0;transition:max-width .5s cubic-bezier(.4,0,.2,1);max-width:260px;overflow:hidden}
+  /* in compact mode, brand grows invisibly to push nav to center: brand(52 avatar + phantom) */
+  .topbar.compact .brand{max-width:52px}
+  .topbar.compact .brand .brand-meta{opacity:0;transform:translateX(-6px);pointer-events:none}
+  .topbar .brand-meta{transition:opacity .25s var(--t), transform .25s var(--t);white-space:nowrap}
+  .topbar .status{
+    margin:0;flex-shrink:1;min-width:0;
+    transition:opacity .3s var(--t), max-width .3s var(--t), padding .3s var(--t), border-color .3s var(--t), margin .3s var(--t);
+    max-width:260px;overflow:hidden;white-space:nowrap;
+  }
+  @media (max-width: 1100px){
+    .topbar .status{display:none}
+  }
+  .topbar.compact .status{opacity:0;max-width:0;padding:0;border-color:transparent;margin:0}
+  .brand{display:flex;align-items:center;gap:12px;margin-bottom:28px}
+  .avatar{
+    width:44px;height:44px;border-radius:50%;
+    background:linear-gradient(135deg, oklch(0.35 0.05 255), oklch(0.25 0.02 138));
+    border:1px solid var(--line);
+    display:grid;place-items:center;
+    font-family:var(--mono);font-weight:600;color:var(--fg);
+    font-size:15px;letter-spacing:-.5px;
+    overflow:hidden;
+  }
+  .avatar img{width:100%;height:100%;object-fit:cover;display:block}
+  .portrait{
+    width:100%;aspect-ratio:1/1;border:1px solid var(--line);border-radius:6px;
+    overflow:hidden;position:relative;background:var(--bg-2);
+    margin-bottom:18px;
+  }
+  .portrait img{
+    width:100%;height:100%;object-fit:cover;display:block;
+    filter:grayscale(.15) contrast(1.02);
+    transition:filter .6s var(--t), transform .6s var(--t);
+  }
+  .portrait:hover img{filter:none;transform:scale(1.02)}
+  .portrait::after{
+    content:"";position:absolute;inset:0;pointer-events:none;
+    background:linear-gradient(180deg, transparent 60%, oklch(0.145 0.010 255 / .55));
+  }
+  .portrait .cap{
+    position:absolute;left:12px;right:12px;bottom:10px;z-index:2;
+    display:flex;justify-content:space-between;align-items:center;
+    font-family:var(--mono);font-size:10px;color:var(--fg-2);
+    text-transform:uppercase;letter-spacing:.12em;
+  }
+  .portrait .cap .tick{color:var(--accent)}
+  .brand-meta h1{font-size:14px;font-weight:600;letter-spacing:-.01em}
+  .brand-meta p{font-family:var(--mono);font-size:11px;color:var(--fg-3);margin-top:2px}
+
+  .status{
+    display:flex;align-items:center;gap:8px;
+    font-family:var(--mono);font-size:11px;color:var(--fg-3);
+    padding:10px 12px;border:1px solid var(--line-soft);border-radius:var(--radius);
+    margin-bottom:28px;
+    background:var(--bg-2);
+  }
+  .dot{width:6px;height:6px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 3px oklch(0.86 0.18 138 / .15);animation:pulse 2.4s infinite}
+  @keyframes pulse{
+    0%,100%{box-shadow:0 0 0 3px oklch(0.86 0.18 138 / .15)}
+    50%{box-shadow:0 0 0 6px oklch(0.86 0.18 138 / .05)}
+  }
+
+  nav.primary{margin:0 0 0 auto;min-width:0}
+  .topbar-spacer{flex-shrink:0;width:0;transition:width .5s cubic-bezier(.4,0,.2,1)}
+  /* in compact mode, spacer grows to equal (brand-meta + status collapsed widths) / 2 pushing nav toward center */
+  .topbar.compact .topbar-spacer{width:240px}
+  nav.primary .label{display:none}
+  nav.primary ul{list-style:none;display:flex;flex-direction:row;gap:2px;justify-content:flex-end;flex-wrap:nowrap}
+  nav.primary a{
+    display:flex;align-items:center;gap:7px;
+    padding:7px 10px;border-radius:var(--radius);
+    font-family:var(--mono);font-size:12px;color:var(--fg-2);
+    white-space:nowrap;
+    transition:color .2s var(--t), background .2s var(--t);
+    position:relative;
+  }
+  nav.primary a .num{display:inline-block;color:var(--fg-4);font-size:10.5px;line-height:1;opacity:.75}
+  nav.primary a:hover{color:var(--fg);background:var(--bg-2)}
+  nav.primary a.active{color:var(--accent);background:oklch(0.86 0.18 138 / .06)}
+  nav.primary a.active .num{color:var(--accent-2)}
+  nav.primary a::before{display:none}
+
+  .side-block{margin-bottom:22px}
+  .side-block h4{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:.12em;color:var(--fg-4);margin-bottom:8px}
+  .side-block ul{list-style:none;font-family:var(--mono);font-size:11.5px;color:var(--fg-3);display:flex;flex-direction:column;gap:4px}
+  .side-block a:hover{color:var(--accent)}
+
+  .side-foot{margin-top:auto;padding-top:18px;border-top:1px solid var(--line-soft);
+    font-family:var(--mono);font-size:10.5px;color:var(--fg-4);line-height:1.7;}
+
+  /* ——— Main ——— */
+  main{min-width:0;max-width:1240px;margin:0 auto}
+  section{
+    padding:96px 56px;
+    border-bottom:1px solid var(--line);
+    position:relative;
+  }
+  section:last-of-type{border-bottom:none}
+
+  .sec-head{
+    display:flex;align-items:baseline;gap:16px;margin-bottom:48px;
+    padding-bottom:14px;border-bottom:1px dashed var(--line);
+  }
+  .sec-id{font-family:var(--mono);font-size:12px;color:var(--accent-2);letter-spacing:.04em}
+  .sec-title{font-size:28px;font-weight:600;letter-spacing:-.02em}
+  .sec-meta{margin-left:auto;font-family:var(--mono);font-size:11px;color:var(--fg-4)}
+
+  /* ——— Hero / About ——— */
+  .hero{display:grid;grid-template-columns: 1.35fr 1fr;gap:48px;align-items:start}
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:10px;
+    font-family:var(--mono);font-size:11px;color:var(--fg-3);
+    padding:6px 10px;border:1px solid var(--line);border-radius:999px;
+    background:var(--bg-2);margin-bottom:28px;
+  }
+  .eyebrow::before{content:"";width:5px;height:5px;border-radius:50%;background:var(--accent)}
+  h2.name{
+    font-size:clamp(48px, 6.4vw, 92px);
+    line-height:.98;letter-spacing:-.04em;font-weight:600;
+    margin-bottom:20px;
+  }
+  h2.name .last{color:var(--fg-3);font-weight:300}
+  .kicker{
+    font-size:20px;color:var(--fg-2);max-width:640px;
+    line-height:1.45;letter-spacing:-.01em;margin-bottom:36px;
+  }
+  .kicker em{font-style:normal;color:var(--accent);}
+
+  .cta-row{display:flex;gap:12px;flex-wrap:wrap}
+  .btn{
+    font-family:var(--mono);font-size:12.5px;
+    padding:11px 16px;border-radius:var(--radius);
+    border:1px solid var(--line);background:var(--bg-2);
+    display:inline-flex;align-items:center;gap:8px;
+    color:var(--fg);cursor:pointer;
+    transition:all .2s var(--t);
+  }
+  .btn:hover{border-color:var(--fg-3);background:var(--bg-3);transform:translateY(-1px)}
+  .btn.primary{background:var(--accent);color:var(--bg);border-color:var(--accent)}
+  .btn.primary:hover{background:oklch(0.90 0.18 138);border-color:oklch(0.90 0.18 138)}
+  .btn .arr{transition:transform .2s var(--t)}
+  .btn:hover .arr{transform:translate(2px,-2px)}
+
+  /* terminal card */
+  .term{
+    border:1px solid var(--line);border-radius:6px;
+    background:var(--bg-2);font-family:var(--mono);
+    overflow:hidden;
+  }
+  .term-bar{
+    padding:10px 14px;background:oklch(0.17 0.012 255);border-bottom:1px solid var(--line);
+    display:flex;align-items:center;gap:8px;
+    font-size:11px;color:var(--fg-4);
+  }
+  .tdots{display:flex;gap:6px;margin-right:8px}
+  .tdots span{width:10px;height:10px;border-radius:50%;background:var(--bg-3);border:1px solid var(--line)}
+  .term-body{padding:18px 20px;font-size:12.5px;line-height:1.8;color:var(--fg-2)}
+  .term-body .c{color:var(--fg-4)}
+  .term-body .k{color:var(--accent)}
+  .term-body .s{color:var(--warn)}
+  .term-body .p{color:var(--fg-3)}
+  .term-body .b{color:var(--fg);font-weight:500}
+  .cursor{display:inline-block;width:8px;height:14px;background:var(--accent);vertical-align:-2px;animation:blink 1s steps(2) infinite}
+  @keyframes blink{50%{opacity:0}}
+
+  /* ——— About details grid ——— */
+  .bio{display:grid;grid-template-columns: 1fr 1fr;gap:0;margin-top:64px;border:1px solid var(--line);border-radius:6px;overflow:hidden;background:oklch(0.155 0.010 255 / .6)}
+  .bio .cell{padding:26px 28px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);min-height:160px}
+  .bio .cell:nth-child(2n){border-right:none}
+  .bio .cell:nth-last-child(-n+2){border-bottom:none}
+  .cell h4{font-family:var(--mono);font-size:10.5px;text-transform:uppercase;letter-spacing:.14em;color:var(--fg-4);margin-bottom:14px;display:flex;align-items:center;gap:8px}
+  .cell h4::before{content:"";width:14px;height:1px;background:var(--accent)}
+  .cell p{color:var(--fg-2);font-size:14.5px;line-height:1.55}
+  .cell p + p{margin-top:10px}
+  .cell ul{list-style:none;font-size:14px;color:var(--fg-2);display:flex;flex-direction:column;gap:6px}
+  .cell ul li::before{content:"›  ";color:var(--accent-2);font-family:var(--mono)}
+  .pill{display:inline-flex;padding:3px 8px;font-family:var(--mono);font-size:10.5px;border:1px solid var(--line);border-radius:3px;color:var(--fg-2);background:var(--bg)}
+  .pills{display:flex;flex-wrap:wrap;gap:6px}
+
+  /* ——— Projects ——— */
+  .projects{display:grid;grid-template-columns: repeat(6, 1fr);gap:20px}
+  .proj{
+    border:1px solid var(--line);border-radius:6px;background:var(--bg-2);
+    padding:0;overflow:hidden;
+    transition:border-color .25s var(--t), transform .25s var(--t), background .25s var(--t);
+    display:flex;flex-direction:column;
+    text-decoration:none;color:inherit;
+  }
+  .proj:hover{border-color:var(--accent);transform:translateY(-2px);background:oklch(0.185 0.012 255)}
+  .proj .art{
+    aspect-ratio: 16/7;border-bottom:1px solid var(--line);
+    background:
+      repeating-linear-gradient(45deg, transparent 0 12px, oklch(0.2 0.012 255) 12px 13px),
+      linear-gradient(180deg, oklch(0.17 0.012 255), oklch(0.145 0.010 255));
+    position:relative;overflow:hidden;
+    display:grid;place-items:center;
+    font-family:var(--mono);font-size:11px;color:var(--fg-4);
+  }
+  .proj .art svg{width:88%;max-width:540px;height:auto;display:block}
+  .proj .art .node{fill:var(--bg-2);stroke:var(--line);stroke-width:1}
+  .proj .art .node-a{fill:oklch(0.86 0.18 138 / .12);stroke:var(--accent-2);stroke-width:1}
+  .proj .art .edge{stroke:var(--fg-4);stroke-width:1;fill:none}
+  .proj .art .edge-a{stroke:var(--accent-2);stroke-width:1;fill:none}
+  .proj .art .lbl{fill:var(--fg-2);font-family:var(--mono);font-size:10px}
+  .proj .art .lbl-a{fill:var(--accent);font-family:var(--mono);font-size:10px;font-weight:500}
+  .proj .art .lbl-dim{fill:var(--fg-4);font-family:var(--mono);font-size:9px}
+  .proj .art .badge{position:absolute;top:12px;left:12px;font-family:var(--mono);font-size:10px;padding:3px 8px;border:1px solid var(--line);background:var(--bg);color:var(--fg-2);border-radius:3px}
+  .proj .art .ex{position:absolute;top:12px;right:12px;font-family:var(--mono);font-size:11px;color:var(--fg-3);transition:color .2s var(--t)}
+  .proj:hover .ex{color:var(--accent)}
+  .proj .body{padding:20px 22px;flex:1;display:flex;flex-direction:column}
+  .proj .meta{display:flex;gap:10px;font-family:var(--mono);font-size:10.5px;color:var(--fg-4);margin-bottom:10px;text-transform:uppercase;letter-spacing:.1em}
+  .proj h3{font-size:19px;font-weight:600;letter-spacing:-.015em;margin-bottom:8px;line-height:1.25}
+  .proj p{color:var(--fg-3);font-size:13.5px;line-height:1.55;margin-bottom:14px}
+  .proj .pills{margin-top:auto}
+
+  .proj.feature{grid-column: span 6}
+  .proj.feature .art{aspect-ratio: 32/9}
+  .proj.feature .art svg{max-width:780px}
+  .proj.feature .body{padding:28px 32px}
+  .proj.feature h3{font-size:26px}
+  .proj.feature p{font-size:15px;max-width:72ch}
+  .proj.half{grid-column: span 3}
+  .proj.third{grid-column: span 2}
+
+  .award{
+    display:inline-flex;align-items:center;gap:8px;
+    font-family:var(--mono);font-size:11px;
+    padding:4px 10px;border-radius:3px;
+    background:oklch(0.82 0.15 70 / .12);color:var(--warn);
+    border:1px solid oklch(0.82 0.15 70 / .3);
+    margin-bottom:12px;
+  }
+
+  /* ——— Resume section ——— */
+  .resume-wrap{display:grid;grid-template-columns: 280px 1fr;gap:32px}
+  .res-toc{
+    border:1px solid var(--line);border-radius:6px;background:var(--bg-2);
+    padding:18px;position:sticky;top:24px;align-self:start;
+  }
+  .res-toc h5{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:.14em;color:var(--fg-4);margin-bottom:12px}
+  .res-toc ol{list-style:none;counter-reset:toc;display:flex;flex-direction:column;gap:2px}
+  .res-toc li{counter-increment:toc}
+  .res-toc a{
+    display:flex;gap:10px;padding:6px 8px;border-radius:3px;
+    font-family:var(--mono);font-size:12px;color:var(--fg-2);
+  }
+  .res-toc a::before{content:"0" counter(toc);color:var(--fg-4);width:22px}
+  .res-toc a:hover{background:var(--bg-3);color:var(--fg)}
+  .res-toc a.active{color:var(--accent)}
+
+  .res-panel{
+    border:1px solid var(--line);border-radius:6px;background:var(--bg-2);
+    overflow:hidden;
+  }
+  .res-tabs{
+    display:flex;border-bottom:1px solid var(--line);
+    font-family:var(--mono);font-size:11.5px;
+  }
+  .res-tabs button{
+    padding:12px 18px;background:transparent;border:none;color:var(--fg-3);
+    border-right:1px solid var(--line);cursor:pointer;
+    transition:color .2s var(--t), background .2s var(--t);
+  }
+  .res-tabs button:hover{color:var(--fg);background:oklch(0.175 0.012 255)}
+  .res-tabs button.on{color:var(--accent);background:oklch(0.86 0.18 138 / .06)}
+  .res-tabs .spacer{flex:1;border-right:1px solid var(--line)}
+  .res-tabs .dl{padding:12px 18px;color:var(--fg-2);font-family:var(--mono);font-size:11.5px;display:flex;align-items:center;gap:8px}
+  .res-tabs .dl:hover{color:var(--accent)}
+
+  .res-tab{display:none;padding:32px 36px}
+  .res-tab.on{display:block}
+
+  /* timeline */
+  .tl{position:relative;padding-left:28px}
+  .tl::before{content:"";position:absolute;left:6px;top:6px;bottom:6px;width:1px;background:var(--line)}
+  .tl-item{position:relative;padding-bottom:28px}
+  .tl-item:last-child{padding-bottom:0}
+  .tl-item::before{
+    content:"";position:absolute;left:-28px;top:6px;
+    width:13px;height:13px;border-radius:50%;background:var(--bg-2);
+    border:2px solid var(--accent);
+  }
+  .tl-item.past::before{border-color:var(--fg-4)}
+  .tl-date{font-family:var(--mono);font-size:11px;color:var(--fg-3);margin-bottom:4px;letter-spacing:.04em}
+  .tl-title{font-size:16px;font-weight:600;letter-spacing:-.01em;margin-bottom:2px}
+  .tl-org{font-family:var(--mono);font-size:12px;color:var(--accent-2);margin-bottom:8px}
+  .tl-body{font-size:14px;color:var(--fg-2);line-height:1.55;max-width:68ch}
+  .tl-body ul{margin-top:8px;list-style:none;display:flex;flex-direction:column;gap:4px}
+  .tl-body li::before{content:"— ";color:var(--fg-4)}
+
+  .skillgrid{display:grid;grid-template-columns: repeat(3, 1fr);gap:22px}
+  .skillgroup h5{font-family:var(--mono);font-size:10.5px;text-transform:uppercase;letter-spacing:.14em;color:var(--fg-4);margin-bottom:14px;display:flex;align-items:center;gap:8px}
+  .skillgroup h5::before{content:"//";color:var(--accent-2)}
+  .skillgroup ul{list-style:none;display:flex;flex-direction:column;gap:8px}
+  .skillrow{display:grid;grid-template-columns: 1fr 120px;align-items:center;gap:12px;font-size:13.5px;color:var(--fg-2)}
+  .skillrow .bar{height:4px;background:var(--bg-3);border-radius:2px;overflow:hidden;border:1px solid var(--line-soft)}
+  .skillrow .bar span{display:block;height:100%;background:var(--accent);border-radius:2px}
+
+  .awardlist{display:flex;flex-direction:column;gap:14px}
+  .awrow{
+    display:grid;grid-template-columns: 110px 1fr auto;gap:20px;align-items:start;
+    padding:16px 0;border-bottom:1px dashed var(--line);
+  }
+  .awrow:last-child{border-bottom:none}
+  .awyear{font-family:var(--mono);font-size:12px;color:var(--fg-3)}
+  .awtitle{font-size:15px;font-weight:500;letter-spacing:-.01em}
+  .awdesc{font-size:13px;color:var(--fg-3);margin-top:4px}
+  .awtag{font-family:var(--mono);font-size:10.5px;padding:3px 8px;border:1px solid var(--line);border-radius:3px;color:var(--fg-2);white-space:nowrap}
+  .awtag.gold{color:var(--warn);border-color:oklch(0.82 0.15 70 / .4);background:oklch(0.82 0.15 70 / .08)}
+
+  /* ——— Contact ——— */
+  .contact{display:grid;grid-template-columns: 1fr 1fr;gap:40px;align-items:start}
+  .contact-card{
+    border:1px solid var(--line);border-radius:6px;background:var(--bg-2);
+    padding:32px;
+  }
+  .contact h3.big{font-size:40px;line-height:1.05;letter-spacing:-.025em;font-weight:600;margin-bottom:18px}
+  .contact h3.big em{font-style:normal;color:var(--accent)}
+  .contact .copy{color:var(--fg-2);font-size:15.5px;line-height:1.55;max-width:48ch;margin-bottom:28px}
+
+  .channels{display:flex;flex-direction:column;gap:2px}
+  .ch{
+    display:grid;grid-template-columns: 90px 1fr auto;gap:18px;align-items:center;
+    padding:16px 4px;border-bottom:1px solid var(--line-soft);
+    text-decoration:none;color:inherit;
+    transition:padding .2s var(--t), color .2s var(--t);
+  }
+  .ch:last-child{border-bottom:none}
+  .ch:hover{padding-left:10px;color:var(--accent)}
+  .ch .label{font-family:var(--mono);font-size:10.5px;text-transform:uppercase;letter-spacing:.14em;color:var(--fg-4)}
+  .ch .val{font-size:15px;color:var(--fg);letter-spacing:-.005em}
+  .ch .arr{font-family:var(--mono);color:var(--fg-4);transition:transform .2s var(--t), color .2s var(--t)}
+  .ch:hover .arr{transform:translateX(4px);color:var(--accent)}
+
+  .schematic{
+    border:1px solid var(--line);border-radius:6px;background:var(--bg-2);
+    padding:28px;
+  }
+  .schematic svg{width:100%;height:auto;display:block}
+  .sch-node{fill:var(--bg-3);stroke:var(--line);stroke-width:1}
+  .sch-node-a{fill:oklch(0.86 0.18 138 / .14);stroke:var(--accent-2);stroke-width:1}
+  .sch-edge{stroke:var(--fg-4);stroke-width:1;fill:none}
+  .sch-edge-a{stroke:var(--accent-2);stroke-width:1;fill:none;stroke-dasharray:3 3}
+  .sch-lbl{fill:var(--fg-2);font-family:var(--mono);font-size:11px}
+  .sch-lbl-a{fill:var(--accent);font-family:var(--mono);font-size:11px;font-weight:500}
+  .sch-lbl-dim{fill:var(--fg-4);font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:.12em}
+  .sch-kv{display:grid;grid-template-columns: 80px 1fr;gap:10px 16px;margin-top:22px;padding-top:22px;border-top:1px solid var(--line);font-family:var(--mono);font-size:11.5px}
+  .sch-kv dt{color:var(--accent);text-transform:uppercase;letter-spacing:.12em;font-size:10px;align-self:center}
+  .sch-kv dd{color:var(--fg-2)}
+
+  footer.page-foot{
+    padding:40px 56px;border-top:1px solid var(--line);
+    display:flex;justify-content:space-between;align-items:center;
+    font-family:var(--mono);font-size:11px;color:var(--fg-4);
+  }
+
+  /* ——— Scroll reveal ——— */
+  .reveal{opacity:0;transform:translateY(14px);transition:opacity .7s var(--t), transform .7s var(--t)}
+  .reveal.in{opacity:1;transform:none}
+  .reveal.d1{transition-delay:.06s}
+  .reveal.d2{transition-delay:.12s}
+  .reveal.d3{transition-delay:.18s}
+  .reveal.d4{transition-delay:.24s}
+
+  /* ——— Responsive ——— */
+  .paperlinks{list-style:none;margin-top:12px;display:flex;flex-direction:column;gap:6px;font-family:var(--mono);font-size:12px}
+  .paperlinks li{line-height:1.45;color:var(--fg-2)}
+  .paperlinks a{display:flex;flex-wrap:wrap;align-items:baseline;gap:8px;padding:6px 8px;border:1px solid var(--line);border-radius:4px;background:var(--bg-2);color:var(--fg-2);transition:color .15s var(--t), border-color .15s var(--t), background .15s var(--t)}
+  .paperlinks a:hover{color:var(--fg);border-color:var(--accent);background:oklch(0.86 0.18 138 / .05)}
+  .paperlinks .pidx{color:var(--accent-2);flex-shrink:0}
+  .paperlinks .pvenue{color:var(--fg-4);font-size:11px}
+  .paperlinks .pdf{margin-left:auto;color:var(--accent);font-size:11px}
+  .paperlinks .muted{padding:6px 8px;color:var(--fg-4);display:flex;gap:8px;align-items:baseline}
+  @media (max-width: 1100px){
+    .shell{grid-template-columns: 1fr}
+    aside{position:relative;height:auto;border-right:none;border-bottom:1px solid var(--line);flex-direction:row;flex-wrap:wrap;gap:14px 18px;padding:14px 24px;align-items:center}
+    aside .brand{margin:0}
+    aside .status{margin:0}
+    aside nav.primary{margin:0;flex:1 1 100%;display:flex;align-items:center;gap:10px}
+    aside nav.primary .label{margin:0;flex-shrink:0}
+    aside nav.primary ul{flex-direction:row;flex-wrap:nowrap;gap:4px;overflow-x:auto;-webkit-overflow-scrolling:touch;flex:1}
+    aside nav.primary a{flex-shrink:0}
+    aside nav.primary a::before{display:none}
+    aside .side-block, aside .side-foot{display:none}
+    section{padding:80px 32px}
+    .hero{grid-template-columns: 1fr}
+    .bio{grid-template-columns: 1fr}
+    .bio .cell{border-right:none !important}
+    .projects{grid-template-columns: 1fr}
+    .proj.feature, .proj.half, .proj.third{grid-column: span 1}
+    .resume-wrap{grid-template-columns: 1fr}
+    .res-toc{position:relative;top:auto}
+    .contact{grid-template-columns: 1fr}
+    .skillgrid{grid-template-columns: 1fr}
+  }
+</style>
+</head>
+<body>
+
+<div class="shell">
+
+  <!-- ============ TOP HEADER ============ -->
+  <header class="topbar" id="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <div class="avatar"><img src="assets/img/profile.png" alt="Seungheon Lee"></div>
+        <div class="brand-meta">
+          <h1>Seungheon Lee</h1>
+          <p>Engineering · Physical AI</p>
+        </div>
+      </div>
+
+      <div class="status">
+        <span class="dot"></span>
+        <span>Available for collaboration</span>
+      </div>
+
+      <nav class="primary" id="nav">
+        <div class="label">// navigate</div>
+        <ul>
+          <li><a href="#about"    data-target="about"><span class="num">01</span><span>About</span></a></li>
+          <li><a href="#projects" data-target="projects"><span class="num">02</span><span>Featured</span></a></li>
+          <li><a href="#resume"   data-target="resume"><span class="num">03</span><span>Resume</span></a></li>
+          <li><a href="#more-projects" data-target="more-projects"><span class="num">04</span><span>More</span></a></li>
+          <li><a href="#contact"  data-target="contact"><span class="num">05</span><span>Contact</span></a></li>
+        </ul>
+      </nav>
+      <div class="topbar-spacer" aria-hidden="true"></div>
+    </div>
+  </header>
+
+  <!-- ============ MAIN ============ -->
+  <main>
+
+    <!-- ============ ABOUT ============ -->
+    <section id="about">
+      <div class="sec-head">
+        <span class="sec-id">§ 01</span>
+        <h2 class="sec-title">About</h2>
+        <span class="sec-meta">cat ~/about.md</span>
+      </div>
+
+      <div class="hero">
+        <div>
+          <div class="eyebrow reveal">Application Engineer · Physical AI · Applied Intuition</div>
+          <h2 class="name reveal d1">Seungheon<br><span class="last">Lee.</span></h2>
+          <p class="kicker reveal d2">
+            Application Engineer at <em><a href="https://www.appliedintuition.com/" target="_blank" rel="noopener" style="color:var(--accent);border-bottom:1px solid currentColor">Applied Intuition</a></em> (Seoul).
+            Collaborating with autonomy developers to design scalable software solutions,
+            adapting products to accelerate customer's <em>Physical AI</em> and autonomous
+            mobility initiatives. Previously Technical PM on the Robotaxi production
+            program at <em><a href="https://www.hyundaimotorgroup.com/main/mainRecommend" target="_blank" rel="noopener" style="color:var(--accent);border-bottom:1px solid currentColor">Hyundai Motor Company</a></em> R&amp;D Center,
+            and SWE intern at <em><a href="https://research.samsung.com/" target="_blank" rel="noopener" style="color:var(--accent);border-bottom:1px solid currentColor">Samsung Research</a></em>.
+          </p>
+          <div class="cta-row reveal d3">
+            <a class="btn primary" href="#projects">
+              <span>View projects</span>
+              <span class="arr">↗</span>
+            </a>
+            <a class="btn" href="#resume">
+              <span>Read resume</span>
+            </a>
+            <a class="btn" href="/cdn-cgi/l/email-protection#c7b4a2b2a9a0afa2a8a9e9a6ae87a0aaa6aeabe9a4a8aa">
+              <span>Get in touch</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="reveal d2">
+          <div class="term">
+            <div class="term-bar">
+              <div class="tdots"><span></span><span></span><span></span></div>
+              <span>seungheon@appliedintuition — zsh</span>
+            </div>
+            <div class="term-body">
+              <span class="p">$</span> <span class="b">whoami</span><br>
+              <span>seungheon lee · application engineer, applied intuition</span><br>
+              <span class="c"># → physical ai · autonomy tooling · seoul</span><br><br>
+              <span class="p">$</span> <span class="b">cat</span> focus.txt<br>
+              <span class="k">&gt;</span> application engineering for autonomy customers<br>
+              <span class="k">&gt;</span> adapting products to real vehicle programs<br>
+              <span class="k">&gt;</span> bridging customer teams ↔ HQ engineering<br>
+              <span class="k">&gt;</span> scaling simulation &amp; developer tooling<br><br>
+              <span class="p">$</span> <span class="b">status</span><br>
+              <span class="k">●</span> shipping with customers<span class="cursor"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Detailed bio grid -->
+      <div class="bio">
+        <div class="cell reveal">
+          <h4>Now · May 2026</h4>
+          <p>Application Engineer at <a href="https://www.appliedintuition.com/" target="_blank" rel="noopener" style="color:var(--fg);border-bottom:1px solid var(--line)"><strong>Applied Intuition</strong></a>, Seoul office. Collaborating with autonomy developers to design scalable software solutions and adapting products to accelerate customers' Physical AI and autonomous mobility initiatives.</p>
+        </div>
+
+        <div class="cell reveal d1">
+          <h4>Previously · 2025</h4>
+          <p>Technical Project Manager at <a href="https://www.hyundaimotorgroup.com/main/mainRecommend" target="_blank" rel="noopener" style="color:var(--fg);border-bottom:1px solid var(--line)"><strong>Hyundai Motor Company</strong></a> R&amp;D Center. Led the <a href="https://www.hyundaimotorgroup.com/news/CONT0000000000161922" target="_blank" rel="noopener" style="color:var(--fg);border-bottom:1px solid var(--line)">Robotaxi production project</a> across a 600+ person program.</p>
+        </div>
+
+        <div class="cell reveal d2">
+          <h4>Focus Areas</h4>
+          <ul>
+            <li>Deploying autonomy tooling into customer vehicle programs</li>
+            <li>Adapting simulation &amp; developer platforms to real-world constraints</li>
+            <li>Translating customer feedback into product engineering work</li>
+          </ul>
+        </div>
+
+        <div class="cell reveal d3">
+          <h4>Toolchain</h4>
+          <div class="pills">
+            <span class="pill">Python</span><span class="pill">C / C++</span>
+            <span class="pill">PyTorch</span><span class="pill">OpenCV</span>
+            <span class="pill">Linux</span><span class="pill">Kubernetes</span>
+            <span class="pill">MATLAB</span><span class="pill">ROS</span>
+            <span class="pill">Grafana</span><span class="pill">W&amp;B</span>
+            <span class="pill">LiDAR</span><span class="pill">RGB-D</span>
+          </div>
+        </div>
+
+        <div class="cell reveal">
+          <h4>Previously</h4>
+          <p>Software Engineer Intern at <a href="https://research.samsung.com/" target="_blank" rel="noopener" style="color:var(--fg);border-bottom:1px solid var(--line)"><strong>Samsung Research</strong></a>. Undergraduate researcher at the <a href="https://robotics.uos.ac.kr/" target="_blank" rel="noopener" style="color:var(--fg);border-bottom:1px solid var(--line)"><strong>Robotics Lab, University of Seoul</strong></a> — graduated #1 of 46, major GPA 4.35 / 4.5.</p>
+        </div>
+
+        <div class="cell reveal d1">
+          <h4>Off-Hours</h4>
+          <p>Building small websites for friends, watching films, and playing League of Legends — mostly League, honestly.</p>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ============ PROJECTS ============ -->
+    <section id="projects">
+      <div class="sec-head">
+        <span class="sec-id">§ 02</span>
+        <h2 class="sec-title">Featured Project</h2>
+        <span class="sec-meta">sep — dec 2024 · ai semiconductor</span>
+      </div>
+
+      <div class="projects">
+
+        <!-- FEATURED -->
+        <a class="proj feature reveal" href="https://github.com/Githarold/furiosa-warboy-inference" target="_blank" rel="noopener">
+          <div class="art">
+            <span class="badge">◆ featured</span>
+            <span class="ex">github.com/Githarold ↗</span>
+            <svg viewBox="0 0 780 220" xmlns="http://www.w3.org/2000/svg">
+              <rect class="node" x="40" y="70" width="150" height="80" rx="4"/>
+              <text class="lbl" x="115" y="105" text-anchor="middle">FP32 model</text>
+              <text class="lbl-dim" x="115" y="128" text-anchor="middle">cv backbone</text>
+
+              <line class="edge" x1="190" y1="110" x2="260" y2="110" marker-end="url(#arr)"/>
+
+              <rect class="node-a" x="260" y="70" width="180" height="80" rx="4"/>
+              <text class="lbl-a" x="350" y="105" text-anchor="middle">QUANTIZE</text>
+              <text class="lbl-dim" x="350" y="128" text-anchor="middle">+ calibrate</text>
+
+              <line class="edge" x1="440" y1="110" x2="510" y2="110" marker-end="url(#arr)"/>
+
+              <rect class="node" x="510" y="70" width="170" height="80" rx="4"/>
+              <text class="lbl" x="595" y="105" text-anchor="middle">INT8 NPU</text>
+              <text class="lbl-dim" x="595" y="128" text-anchor="middle">warboy inference</text>
+
+              <text class="lbl-dim" x="115" y="54" text-anchor="middle">01 — source</text>
+              <text class="lbl-dim" x="350" y="54" text-anchor="middle">02 — optimize</text>
+              <text class="lbl-dim" x="595" y="54" text-anchor="middle">03 — deploy</text>
+
+              <text class="lbl-a" x="595" y="188" text-anchor="middle">latency ↓ 4.2×</text>
+              <defs>
+                <marker id="arr" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto">
+                  <path d="M0,0 L8,4 L0,8 Z" fill="currentColor" opacity="0.6"/>
+                </marker>
+              </defs>
+            </svg>
+          </div>
+          <div class="body">
+            <div class="award">◆ Grand Prize · Minister of Science &amp; ICT Award · KRW 40M</div>
+            <div class="meta"><span>Sep — Dec 2024</span><span>·</span><span>AI Semiconductor</span></div>
+            <h3>Computer Vision Model Optimization for NPU Inference</h3>
+            <p>Grand Prize at the 1st AI Semiconductor Competition (Minister of Science &amp; ICT Award). Collaborated with <strong style="color:var(--fg)">Furiosa AI</strong> in a 2-member team — achieved up to <strong style="color:var(--fg)">533% NPU utilization improvement</strong> over baseline while simultaneously increasing quantization accuracy. Established an MLOps pipeline with W&amp;B and MLflow for systematic experiment tracking and model management.</p>
+            <div class="pills">
+              <span class="pill">PyTorch</span><span class="pill">Quantization</span>
+              <span class="pill">Furiosa NPU</span><span class="pill">Computer Vision</span>
+              <span class="pill">Benchmarking</span>
+            </div>
+          </div>
+        </a>
+
+      </div>
+    </section>
+
+
+    <!-- ============ RESUME ============ -->
+    <section id="resume">
+      <div class="sec-head">
+        <span class="sec-id">§ 03</span>
+        <h2 class="sec-title">Resume</h2>
+        <span class="sec-meta"></span>
+      </div>
+
+      <div class="resume-wrap">
+        <div class="res-toc">
+          <h5>// sections</h5>
+          <ol>
+            <li><a href="#tab-experience" class="tab-link active" data-tab="experience">Experience</a></li>
+            <li><a href="#tab-education"  class="tab-link" data-tab="education">Education</a></li>
+            <li><a href="#tab-skills"     class="tab-link" data-tab="skills">Skills</a></li>
+            <li><a href="#tab-awards"     class="tab-link" data-tab="awards">Awards</a></li>
+          </ol>
+        </div>
+
+        <div class="res-panel reveal">
+          <div class="res-tabs">
+            <button class="on" data-tab="experience">experience.md</button>
+            <button data-tab="education">education.md</button>
+            <button data-tab="skills">skills.yml</button>
+            <button data-tab="awards">awards.md</button>
+            <div class="spacer"></div>
+            <a class="dl" href="assets/Seungheon-Lee-Resume.pdf" target="_blank" rel="noopener" download>↓ download pdf</a>
+          </div>
+
+          <!-- EXPERIENCE -->
+          <div class="res-tab on" id="tab-experience">
+            <div class="tl">
+              <div class="tl-item">
+                <div class="tl-date">May 2026 — Present</div>
+                <div class="tl-title">Application Engineer</div>
+                <div class="tl-org"><a href="https://www.appliedintuition.com/" target="_blank" rel="noopener" style="border-bottom:1px solid var(--line)">Applied Intuition</a> · Seoul, S.Korea</div>
+                <div class="tl-body">
+                  Collaborated with autonomy developers to design scalable software solutions, adapting products to accelerate customers' Physical AI and autonomous mobility initiatives.
+                </div>
+              </div>
+
+              <div class="tl-item past">
+                <div class="tl-date">Jan 2025 — Apr 2026</div>
+                <div class="tl-title">Research Engineer — Technical Project Manager</div>
+                <div class="tl-org"><a href="https://www.hyundaimotorgroup.com/main/mainRecommend" target="_blank" rel="noopener" style="border-bottom:1px solid var(--line)">Hyundai Motor Company</a> · R&amp;D Center · Gyeonggi, S.Korea</div>
+                <div class="tl-body">
+                  Technical PM on a large-scale (600+ personnel) <a href="https://www.hyundaimotorgroup.com/news/CONT0000000000161922" target="_blank" rel="noopener" style="border-bottom:1px solid var(--line)">Robotaxi production project</a>.
+                  <ul>
+                    <li>Established and operated 20+ meeting bodies with the client and internal teams to streamline decision-making.</li>
+                    <li>Minimized risk to critical milestones (certification, firmware deployment) by proactively negotiating test-vehicle production capacity and applying a priority-based resource-allocation strategy.</li>
+                    <li>Collaborated with legal and security teams to review project deliverables for regulatory and security consistency.</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="tl-item past">
+                <div class="tl-date">Jul 2024 — Aug 2024</div>
+                <div class="tl-title">Software Engineer Intern</div>
+                <div class="tl-org"><a href="https://research.samsung.com/" target="_blank" rel="noopener" style="border-bottom:1px solid var(--line)">Samsung Research</a> · Seoul, S.Korea</div>
+                <div class="tl-body">
+                  Built operational tooling for an upcoming LLM service launch.
+                  <ul>
+                    <li>Developed a monitoring system for LLM API servers — implementing previously missing observability needed for launch.</li>
+                    <li>Built Kubernetes clusters and a Dev server to support scalable infrastructure.</li>
+                    <li>Worked with admins to design detailed API analytics and real-time alerting.</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="tl-item past">
+                <div class="tl-date">Mar 2022 — May 2024</div>
+                <div class="tl-title">Undergraduate Researcher</div>
+                <div class="tl-org"><a href="https://robotics.uos.ac.kr/" target="_blank" rel="noopener" style="border-bottom:1px solid var(--line)">Robotics Lab, University of Seoul</a> · Seoul, S.Korea</div>
+                <div class="tl-body">
+                  <ul>
+                    <li><strong style="color:var(--fg)">Grand Prize, Autonomous Robot Race.</strong> Led a software-architecture overhaul — refactoring a monolithic script into a modular framework that unblocked advanced algorithms including Model Predictive Control (MPC).</li>
+                    <li><strong style="color:var(--fg)">1st Place, RoboCup Autonomous Robot Manipulation Challenge.</strong> Engineered a high-fidelity training dataset for the winning model via precise polygon labeling and a novel data pipeline benchmarked from international competitors.</li>
+                    <li>Presented three research papers (2 posters, 1 oral) at academic conferences based on competition findings.</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- EDUCATION -->
+          <div class="res-tab" id="tab-education">
+            <div class="tl">
+              <div class="tl-item past">
+                <div class="tl-date">2019 — 2025</div>
+                <div class="tl-title">B.S., Mechanical Information Engineering · Top Graduate</div>
+                <div class="tl-org">University of Seoul</div>
+                <div class="tl-body">
+                  GPA <strong style="color:var(--fg)">4.15 / 4.5</strong> (Major GPA <strong style="color:var(--fg)">4.35 / 4.5</strong>) · ranked <strong style="color:var(--fg)">1st of 46 students</strong> in the department.
+                  <ul>
+                    <li>Affiliation: Robotics Lab (undergraduate research)</li>
+                    <li>Focus: autonomous systems, control, computer vision</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- SKILLS -->
+          <div class="res-tab" id="tab-skills">
+            <div class="skillgrid">
+              <div class="skillgroup">
+                <h5>languages</h5>
+                <ul>
+                  <li class="skillrow"><span>Python</span><div class="bar"><span style="width:95%"></span></div></li>
+                  <li class="skillrow"><span>C / C++</span><div class="bar"><span style="width:82%"></span></div></li>
+                </ul>
+              </div>
+              <div class="skillgroup">
+                <h5>ai &amp; mlops</h5>
+                <ul>
+                  <li class="skillrow"><span>PyTorch</span><div class="bar"><span style="width:92%"></span></div></li>
+                  <li class="skillrow"><span>Weights &amp; Biases</span><div class="bar"><span style="width:85%"></span></div></li>
+                  <li class="skillrow"><span>MLflow</span><div class="bar"><span style="width:80%"></span></div></li>
+                  <li class="skillrow"><span>Grafana</span><div class="bar"><span style="width:78%"></span></div></li>
+                </ul>
+              </div>
+              <div class="skillgroup">
+                <h5>infrastructure &amp; tools</h5>
+                <ul>
+                  <li class="skillrow"><span>Linux</span><div class="bar"><span style="width:90%"></span></div></li>
+                  <li class="skillrow"><span>Kubernetes</span><div class="bar"><span style="width:75%"></span></div></li>
+                  <li class="skillrow"><span>Docker</span><div class="bar"><span style="width:80%"></span></div></li>
+                  <li class="skillrow"><span>MATLAB</span><div class="bar"><span style="width:72%"></span></div></li>
+                </ul>
+              </div>
+              <div class="skillgroup">
+                <h5>hardware &amp; sensors</h5>
+                <ul>
+                  <li class="skillrow"><span>LiDAR (2D / 3D)</span><div class="bar"><span style="width:85%"></span></div></li>
+                  <li class="skillrow"><span>GPS</span><div class="bar"><span style="width:78%"></span></div></li>
+                  <li class="skillrow"><span>RGB-D Camera</span><div class="bar"><span style="width:82%"></span></div></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- AWARDS -->
+          <div class="res-tab" id="tab-awards">
+            <div class="awardlist">
+              <div class="awrow">
+                <div class="awyear">2024</div>
+                <div>
+                  <div class="awtitle">Grand Prize — Minister of Science &amp; ICT Award</div>
+                  <div class="awdesc">1st AI Semiconductor Competition · Seoul, S.Korea</div>
+                </div>
+                <span class="awtag gold">★ grand prize</span>
+              </div>
+              <div class="awrow">
+                <div class="awyear">2023</div>
+                <div>
+                  <div class="awtitle">First Place — RoboCup Autonomous Robot Manipulation Challenge</div>
+                  <div class="awdesc">Hosted by MathWorks · Bordeaux, France</div>
+                </div>
+                <span class="awtag gold">★ 1st place</span>
+              </div>
+              <div class="awrow">
+                <div class="awyear">2023</div>
+                <div>
+                  <div class="awtitle">Grand Prize — Autonomous Robot Race Competition</div>
+                  <div class="awdesc">Cheongju, S.Korea</div>
+                </div>
+                <span class="awtag gold">★ grand prize</span>
+              </div>
+              <div class="awrow">
+                <div class="awyear">2023</div>
+                <div>
+                  <div class="awtitle">Excellence Award — Engineering Research Internship Outcome Presentation</div>
+                  <div class="awdesc">Seoul, S.Korea</div>
+                </div>
+                <span class="awtag">honor</span>
+              </div>
+              <div class="awrow">
+                <div class="awyear">2023 — 2025</div>
+                <div>
+                  <div class="awtitle">OK Scholarship</div>
+                  <div class="awdesc">OK Scholarship Foundation</div>
+                </div>
+                <span class="awtag">scholarship</span>
+              </div>
+              <div class="awrow">
+                <div class="awyear">2023 — 2024</div>
+                <div>
+                  <div class="awtitle">Blue Lighthouse KB Dream Wave 2030 Promising Field Scholarship</div>
+                  <div class="awdesc">Korea Scholarship Foundation</div>
+                </div>
+                <span class="awtag">scholarship</span>
+              </div>
+              <div class="awrow">
+                <div class="awyear">2023 — 2024</div>
+                <div>
+                  <div class="awtitle">Departmental Valedictorian</div>
+                  <div class="awdesc">Ranked 1st of 46 students · University of Seoul</div>
+                </div>
+                <span class="awtag">academic</span>
+              </div>
+              <div class="awrow">
+                <div class="awyear">2023 — 2024</div>
+                <div>
+                  <div class="awtitle">Three undergraduate research papers</div>
+                  <div class="awdesc">Authored while at the Robotics Lab, University of Seoul</div>
+                </div>
+                <span class="awtag">research</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ============ MORE PROJECTS ============ -->
+    <section id="more-projects">
+      <div class="sec-head">
+        <span class="sec-id">§ 04</span>
+        <h2 class="sec-title">More Projects</h2>
+        <span class="sec-meta">research &middot; robotics &middot; side work</span>
+      </div>
+
+      <div class="projects">
+        <!-- HALF -->
+        <a class="proj half reveal d1" href="https://github.com/Githarold/AdaptiveLAD-PurePursuitRL" target="_blank" rel="noopener">
+          <div class="art">
+            <span class="badge">rl · controls</span>
+            <span class="ex">↗</span>
+            <svg viewBox="0 0 520 220" xmlns="http://www.w3.org/2000/svg">
+              <path class="edge" d="M60 140 Q 200 40, 460 90"/>
+              <circle cx="60" cy="140" r="8" class="node-a"/>
+              <text class="lbl" x="60" y="170" text-anchor="middle">vehicle</text>
+              <circle cx="460" cy="90" r="6" class="node"/>
+              <text class="lbl-dim" x="460" y="76" text-anchor="middle">t+1</text>
+
+              <rect class="node-a" x="200" y="125" width="120" height="48" rx="4"/>
+              <text class="lbl-a" x="260" y="155" text-anchor="middle">RL agent</text>
+
+              <line class="edge-a" x1="85" y1="148" x2="200" y2="149"/>
+              <line class="edge-a" x1="320" y1="149" x2="440" y2="100" marker-end="url(#arr2)"/>
+              <text class="lbl-dim" x="400" y="140">adaptive LAD</text>
+              <defs>
+                <marker id="arr2" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto">
+                  <path d="M0,0 L8,4 L0,8 Z" fill="currentColor" opacity="0.6"/>
+                </marker>
+              </defs>
+            </svg>
+          </div>
+          <div class="body">
+            <div class="meta"><span>2024</span><span>·</span><span>reinforcement learning</span></div>
+            <h3>Adaptive LAD for Pure-Pursuit</h3>
+            <p>Reinforcement-learning agent that adapts the Look-Ahead Distance of a pure-pursuit controller in real time, improving path-tracking accuracy across variable curvature and speed profiles.</p>
+            <div class="pills">
+              <span class="pill">RL</span><span class="pill">Pure-Pursuit</span><span class="pill">Python</span>
+            </div>
+          </div>
+        </a>
+
+        <!-- HALF -->
+        <a class="proj half reveal d2" href="https://github.com/Githarold/2024ESWContest_free_1078" target="_blank" rel="noopener">
+          <div class="art">
+            <span class="badge">embedded · ai</span>
+            <span class="ex">↗</span>
+            <svg viewBox="0 0 520 220" xmlns="http://www.w3.org/2000/svg">
+              <!-- user text input -->
+              <rect class="node" x="18" y="82" width="112" height="56" rx="4"/>
+              <text class="lbl-dim" x="74" y="102" text-anchor="middle">user input</text>
+              <text class="lbl" x="74" y="122" text-anchor="middle">“something sweet”</text>
+
+              <!-- LLM w/ few-shot -->
+              <rect class="node-a" x="160" y="72" width="130" height="76" rx="4"/>
+              <text class="lbl-a" x="225" y="98" text-anchor="middle">LLM</text>
+              <text class="lbl-dim" x="225" y="116" text-anchor="middle">few-shot prompt</text>
+              <text class="lbl-dim" x="225" y="132" text-anchor="middle">mood → recipe</text>
+
+              <!-- recipe JSON -->
+              <rect class="node" x="320" y="72" width="96" height="76" rx="4"/>
+              <text class="lbl" x="368" y="92" text-anchor="middle">recipe</text>
+              <text class="lbl-dim" x="368" y="110" text-anchor="middle">gin 40ml</text>
+              <text class="lbl-dim" x="368" y="124" text-anchor="middle">lime 15ml</text>
+              <text class="lbl-dim" x="368" y="138" text-anchor="middle">syrup 10ml</text>
+
+              <!-- rotating dispenser plate -->
+              <g transform="translate(470, 110)">
+                <circle class="node-a" cx="0" cy="0" r="36" fill="none"/>
+                <circle class="node" cx="0" cy="-24" r="7"/>
+                <circle class="node" cx="22" cy="-8" r="7"/>
+                <circle class="node-a" cx="14" cy="20" r="7"/>
+                <circle class="node" cx="-14" cy="20" r="7"/>
+                <circle class="node" cx="-22" cy="-8" r="7"/>
+                <circle cx="0" cy="0" r="3" fill="currentColor" opacity="0.4"/>
+                <path class="edge-a" d="M 0 -32 A 32 32 0 0 1 26 -16" fill="none" marker-end="url(#arr3)"/>
+              </g>
+              <text class="lbl-dim" x="470" y="172" text-anchor="middle">rotating plate</text>
+
+              <line class="edge" x1="130" y1="110" x2="158" y2="110" marker-end="url(#arr3)"/>
+              <line class="edge" x1="290" y1="110" x2="318" y2="110" marker-end="url(#arr3)"/>
+              <line class="edge" x1="416" y1="110" x2="432" y2="110" marker-end="url(#arr3)"/>
+
+              <defs>
+                <marker id="arr3" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto">
+                  <path d="M0,0 L8,4 L0,8 Z" fill="currentColor" opacity="0.6"/>
+                </marker>
+              </defs>
+            </svg>
+          </div>
+          <div class="body">
+            <div class="meta"><span>Mar — Oct 2024</span><span>·</span><span>embedded SW contest</span></div>
+            <h3>AI-Powered Smart Bartending System</h3>
+            <p>Architected the core AI engine to translate ambiguous user inputs (mood, taste) into quantitative cocktail recipes. Leveraged prompt engineering and few-shot learning to robustly handle qualitative data uncertainty — bypassing the need for extensive model fine-tuning.</p>
+            <div class="pills">
+              <span class="pill">Prompt Engineering</span><span class="pill">Few-Shot</span><span class="pill">Embedded</span>
+            </div>
+          </div>
+        </a>
+
+        <!-- THIRD × 3 -->
+        <a class="proj third reveal" href="https://github.com/Githarold/NutriScan" target="_blank" rel="noopener">
+          <div class="art">
+            <span class="badge">mobile · cv</span>
+            <span class="ex">↗</span>
+            <svg viewBox="0 0 340 200" xmlns="http://www.w3.org/2000/svg">
+              <rect class="node" x="30" y="70" width="70" height="60" rx="4"/>
+              <text class="lbl-dim" x="65" y="95" text-anchor="middle">scan</text>
+              <text class="lbl" x="65" y="115" text-anchor="middle">meal</text>
+
+              <rect class="node-a" x="135" y="70" width="75" height="60" rx="4"/>
+              <text class="lbl-a" x="172" y="105" text-anchor="middle">detect</text>
+
+              <rect class="node" x="245" y="70" width="70" height="60" rx="4"/>
+              <text class="lbl" x="280" y="105" text-anchor="middle">log</text>
+
+              <line class="edge" x1="100" y1="100" x2="135" y2="100" marker-end="url(#arrT)"/>
+              <line class="edge" x1="210" y1="100" x2="245" y2="100" marker-end="url(#arrT)"/>
+              <path class="edge-a" d="M280 130 Q 280 165, 172 165 Q 65 165, 65 135" marker-end="url(#arrT)"/>
+              <defs>
+                <marker id="arrT" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto">
+                  <path d="M0,0 L8,4 L0,8 Z" fill="currentColor" opacity="0.6"/>
+                </marker>
+              </defs>
+            </svg>
+          </div>
+          <div class="body">
+            <div class="meta"><span>2024</span><span>·</span><span>mobile</span></div>
+            <h3>NutriScan</h3>
+            <p>Automated diet-management app — scans meals and logs nutritional intake with on-device CV.</p>
+            <div class="pills"><span class="pill">CV</span><span class="pill">Mobile</span></div>
+          </div>
+        </a>
+
+        <div class="proj third reveal d1">
+          <div class="art">
+            <span class="badge">papers</span>
+            <svg viewBox="0 0 340 200" xmlns="http://www.w3.org/2000/svg">
+              <rect class="node" x="60" y="45" width="220" height="34" rx="3"/>
+              <text class="lbl" x="72" y="67">[1]  KRoC · handle grasp pose</text>
+              <rect class="node-a" x="60" y="92" width="220" height="34" rx="3"/>
+              <text class="lbl-a" x="72" y="114">[2]  ICROS · singularity viz</text>
+              <rect class="node" x="60" y="139" width="220" height="34" rx="3"/>
+              <text class="lbl" x="72" y="161">[3]  KIBME · LoRA illustrations</text>
+            </svg>
+          </div>
+          <div class="body">
+            <div class="meta"><span>2023 — 2024</span><span>·</span><span>undergraduate research</span></div>
+            <h3>Three undergraduate papers</h3>
+            <p>Authored during my time at the University of Seoul Robotics Lab — two posters, one oral. All three are linked below.</p>
+            <ul class="paperlinks">
+              <li><a href="assets/papers/KRoC2024-Seungheon-Lee-Taekyeom-Lee.pdf" target="_blank" rel="noopener"><span class="pidx">[1]</span> Detection of Handle Grasping Pose Using a Deep Learning-Based Grasping Pose Estimation Algorithm <span class="pvenue">KRoC 2024 · Lee et al.</span> <span class="pdf">pdf ↗</span></a></li>
+              <li><a href="assets/papers/ICROS2023-Seungheon-Lee.pdf" target="_blank" rel="noopener"><span class="pidx">[2]</span> Visualization of Singularity Distribution in Robot Manipulator using Monte Carlo Method <span class="pvenue">ICROS 2023 · Lee, Sagong, Hwang</span> <span class="pdf">pdf ↗</span></a></li>
+              <li><a href="assets/papers/Stable-Diffusion-Custom-Article-Illustrations.pdf" target="_blank" rel="noopener"><span class="pidx">[3]</span> Techniques for Creating Custom Article Illustrations with Stable Diffusion <span class="pvenue">KIBME Summer 2024 · Park, Lee, Lee (KBS)</span> <span class="pdf">pdf ↗</span></a></li>
+            </ul>
+          </div>
+        </div>
+
+        <a class="proj third reveal d2" href="#contact">
+          <div class="art" style="background:var(--bg-2)">
+            <span class="badge">open</span>
+            <svg viewBox="0 0 340 200" xmlns="http://www.w3.org/2000/svg">
+              <rect class="node-a" x="60" y="50" width="220" height="100" rx="4" stroke-dasharray="4 4"/>
+              <line class="edge-a" x1="170" y1="80" x2="170" y2="120"/>
+              <line class="edge-a" x1="150" y1="100" x2="190" y2="100"/>
+              <text class="lbl-a" x="170" y="175" text-anchor="middle">new project</text>
+            </svg>
+          </div>
+          <div class="body">
+            <div class="meta"><span>ongoing</span><span>·</span><span>collaborations</span></div>
+            <h3>Looking for collaborators</h3>
+            <p>Open to applied AI research, especially around perception, control, and edge inference. Say hello.</p>
+            <div class="pills"><span class="pill">Open</span><span class="pill">Research</span></div>
+          </div>
+        </a>
+
+      </div>
+    </section>
+
+
+    <!-- ============ CONTACT ============ -->
+    <section id="contact">
+      <div class="sec-head">
+        <span class="sec-id">§ 05</span>
+        <h2 class="sec-title">Contact</h2>
+        <span class="sec-meta">response within 48h</span>
+      </div>
+
+      <div class="contact">
+        <div>
+          <h3 class="big reveal">Let's build something <em>useful.</em></h3>
+          <p class="copy reveal d1">
+            I'm open to applied AI research, autonomous-systems collaborations,
+            and thoughtful engineering opportunities. If any of this is adjacent
+            to what you're working on, I'd love to hear about it.
+          </p>
+
+          <div class="channels reveal d2">
+            <a class="ch" href="/cdn-cgi/l/email-protection#83f0e6f6ede4ebe6ecedade2eac3e4eee2eaefade0ecee">
+              <span class="label">email</span>
+              <span class="val"><span class="__cf_email__" data-cfemail="136076667d747b767c7d3d727a53747e727a7f3d707c7e">[email&#160;protected]</span></span>
+              <span class="arr">→</span>
+            </a>
+            <a class="ch" href="https://github.com/Githarold" target="_blank" rel="noopener">
+              <span class="label">github</span>
+              <span class="val">github.com/Githarold</span>
+              <span class="arr">↗</span>
+            </a>
+            <a class="ch" href="https://www.linkedin.com/in/c9lee" target="_blank" rel="noopener">
+              <span class="label">linkedin</span>
+              <span class="val">linkedin.com/in/c9lee</span>
+              <span class="arr">↗</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="schematic reveal d2">
+          <div class="sch-lbl-dim" style="margin-bottom:16px">// signal route</div>
+          <svg viewBox="0 0 480 260" xmlns="http://www.w3.org/2000/svg">
+            <circle class="sch-node" cx="50" cy="130" r="22"/>
+            <text class="sch-lbl" x="50" y="134" text-anchor="middle">you</text>
+
+            <rect class="sch-node-a" x="180" y="40"  width="110" height="44" rx="4"/>
+            <text class="sch-lbl-a" x="235" y="67" text-anchor="middle">mail</text>
+            <rect class="sch-node"   x="180" y="108" width="110" height="44" rx="4"/>
+            <text class="sch-lbl"   x="235" y="135" text-anchor="middle">github</text>
+            <rect class="sch-node"   x="180" y="176" width="110" height="44" rx="4"/>
+            <text class="sch-lbl"   x="235" y="203" text-anchor="middle">linkedin</text>
+
+            <path class="sch-edge-a" d="M72 130 Q 130 62, 180 62"/>
+            <path class="sch-edge"   d="M72 130 L 180 130"/>
+            <path class="sch-edge"   d="M72 130 Q 130 198, 180 198"/>
+
+            <path class="sch-edge"   d="M290 62  L 380 62" />
+            <path class="sch-edge"   d="M290 130 L 380 130"/>
+            <path class="sch-edge"   d="M290 198 L 380 198"/>
+
+            <text class="sch-lbl" x="385" y="66">inbox</text>
+            <text class="sch-lbl" x="385" y="134">issues / dm</text>
+            <text class="sch-lbl" x="385" y="202">dm</text>
+          </svg>
+
+          <dl class="sch-kv">
+            <dt>status</dt><dd>available · seoul, kst (+09)</dd>
+            <dt>best</dt><dd>email for anything substantive</dd>
+            <dt>prefer</dt><dd>concrete &gt; general pings</dd>
+            <dt>reply</dt><dd>within ~48h</dd>
+          </dl>
+        </div>
+      </div>
+    </section>
+
+    <footer class="page-foot">
+      <div>© 2026 Seungheon Lee · built with care</div>
+      <div>v2.0 · apr 2026 · seoul, kr</div>
+    </footer>
+
+  </main>
+</div>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js" defer></script><script>
+/* ——— Scroll reveal ——— */
+const io = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+  });
+},{threshold:.12, rootMargin:"0px 0px -60px 0px"});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+/* ——— Active nav on scroll ——— */
+const navLinks = [...document.querySelectorAll('#nav a')];
+const sections = navLinks.map(a=>document.getElementById(a.dataset.target));
+function onScroll(){
+  const y = window.scrollY + 140;
+  let idx = 0;
+  sections.forEach((s,i)=>{ if(s && s.offsetTop <= y) idx = i; });
+  navLinks.forEach((a,i)=>a.classList.toggle('active', i===idx));
+}
+window.addEventListener('scroll', onScroll, {passive:true}); onScroll();
+
+/* ——— Topbar compact on scroll ——— */
+const topbar = document.getElementById('topbar');
+let lastCompact = false;
+function onTopbarScroll(){
+  const should = window.scrollY > 80;
+  if(should !== lastCompact){
+    topbar.classList.toggle('compact', should);
+    lastCompact = should;
+  }
+}
+window.addEventListener('scroll', onTopbarScroll, {passive:true}); onTopbarScroll();
+
+/* ——— Smooth anchor (skip resume tab links) ——— */
+document.querySelectorAll('a[href^="#"]:not(.tab-link)').forEach(a=>{
+  a.addEventListener('click', e=>{
+    const id = a.getAttribute('href').slice(1);
+    const el = document.getElementById(id);
+    if(el){ e.preventDefault(); window.scrollTo({top: el.offsetTop - 0, behavior:'smooth'}); history.replaceState(null,'','#'+id); }
+  });
+});
+
+/* ——— Resume tabs ——— */
+const tabButtons = document.querySelectorAll('.res-tabs button[data-tab]');
+const tabLinks = document.querySelectorAll('.tab-link');
+const tabPanels = document.querySelectorAll('.res-tab');
+function showTab(name){
+  tabButtons.forEach(b=>b.classList.toggle('on', b.dataset.tab===name));
+  tabLinks.forEach(b=>b.classList.toggle('active', b.dataset.tab===name));
+  tabPanels.forEach(p=>p.classList.toggle('on', p.id==='tab-'+name));
+}
+tabButtons.forEach(b=>b.addEventListener('click', ()=>showTab(b.dataset.tab)));
+tabLinks.forEach(b=>b.addEventListener('click', e=>{ e.preventDefault(); showTab(b.dataset.tab); }));
+
+/* ——— Skill bars animate on reveal ——— */
+const barIO = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.querySelectorAll('.skillrow .bar span').forEach((s,i)=>{
+        const w = s.style.width;
+        s.style.width = '0';
+        setTimeout(()=>{ s.style.transition='width .9s cubic-bezier(.2,.7,.2,1)'; s.style.width = w; }, 80 + i*50);
+      });
+      barIO.unobserve(e.target);
+    }
+  });
+},{threshold:.2});
+document.querySelectorAll('.skillgroup').forEach(el=>barIO.observe(el));
+</script>
+
+</body>
+</html>
