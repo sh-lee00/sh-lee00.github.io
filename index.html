@@ -489,7 +489,7 @@
       margin:0 0 0 auto
     }
     nav.primary{flex:1 1 auto;min-width:0;margin:0 0 0 auto}
-    nav.primary ul{overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;flex-wrap:nowrap;justify-content:flex-end}
+    nav.primary ul{overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;flex-wrap:nowrap;justify-content:flex-start}
     nav.primary ul::-webkit-scrollbar{display:none}
     /* sections */
     section{padding:56px 20px}
@@ -504,6 +504,8 @@
     .awtag{display:none}
     /* contact channels */
     .ch{grid-template-columns:70px 1fr auto;gap:10px}
+    /* stack CTA buttons vertically so none wrap */
+    .cta-row{flex-direction:column;align-items:flex-start;gap:8px}
   }
 </style>
 </head>
@@ -656,7 +658,8 @@
               <text class="lbl-dim" x="385" y="18" text-anchor="middle">02 — post-training quantize</text>
               <text class="lbl-dim" x="645" y="18" text-anchor="middle">03 — warboy npu</text>
 
-              <!-- FP32 model: stacked layer blocks -->
+              <!-- FP32 model: container + stacked layer blocks -->
+              <rect class="node" x="26" y="26" width="166" height="150" rx="4"/>
               <rect class="node" x="30" y="30" width="158" height="14" rx="2"/>
               <text class="lbl-dim" x="109" y="41" text-anchor="middle">backbone · resnet50</text>
               <rect class="node" x="30" y="48" width="158" height="14" rx="2"/>
@@ -1151,35 +1154,17 @@
           <div class="art">
             <span class="badge">papers</span>
             <svg viewBox="0 0 340 200" xmlns="http://www.w3.org/2000/svg">
-              <!-- Paper nodes (left) -->
-              <rect class="node" x="8" y="16" width="168" height="38" rx="3"/>
-              <text class="lbl" x="18" y="34" text-anchor="start">[1] KRoC 2024</text>
-              <text class="lbl-dim" x="18" y="48" text-anchor="start">grasp pose · deep learning</text>
+              <rect class="node" x="20" y="18" width="300" height="44" rx="3"/>
+              <text class="lbl" x="32" y="38" text-anchor="start">[1] KRoC 2024</text>
+              <text class="lbl-dim" x="32" y="52" text-anchor="start">handle grasping pose estimation</text>
 
-              <rect class="node-a" x="8" y="81" width="168" height="38" rx="3"/>
-              <text class="lbl-a" x="18" y="99" text-anchor="start">[2] ICROS 2023</text>
-              <text class="lbl-dim" x="18" y="113" text-anchor="start">singularity viz · monte carlo</text>
+              <rect class="node-a" x="20" y="78" width="300" height="44" rx="3"/>
+              <text class="lbl-a" x="32" y="98" text-anchor="start">[2] ICROS 2023</text>
+              <text class="lbl-dim" x="32" y="112" text-anchor="start">robot singularity visualization</text>
 
-              <rect class="node" x="8" y="146" width="168" height="38" rx="3"/>
-              <text class="lbl" x="18" y="164" text-anchor="start">[3] KIBME 2024</text>
-              <text class="lbl-dim" x="18" y="178" text-anchor="start">LoRA · stable diffusion</text>
-
-              <!-- Topic nodes (right) -->
-              <rect class="node" x="226" y="16" width="106" height="26" rx="3"/>
-              <text class="lbl-dim" x="279" y="33" text-anchor="middle">manipulation</text>
-
-              <rect class="node-a" x="226" y="87" width="106" height="26" rx="3"/>
-              <text class="lbl-a" x="279" y="104" text-anchor="middle">robotics · control</text>
-
-              <rect class="node" x="226" y="158" width="106" height="26" rx="3"/>
-              <text class="lbl-dim" x="279" y="175" text-anchor="middle">generative AI</text>
-
-              <!-- Cross-edges (papers → topics) -->
-              <line class="edge" x1="176" y1="35" x2="226" y2="29"/>
-              <line class="edge-a" x1="176" y1="35" x2="226" y2="100"/>
-              <line class="edge-a" x1="176" y1="100" x2="226" y2="100"/>
-              <line class="edge" x1="176" y1="100" x2="226" y2="29"/>
-              <line class="edge" x1="176" y1="165" x2="226" y2="171"/>
+              <rect class="node" x="20" y="138" width="300" height="44" rx="3"/>
+              <text class="lbl" x="32" y="158" text-anchor="start">[3] KIBME 2024</text>
+              <text class="lbl-dim" x="32" y="172" text-anchor="start">LoRA-based article illustrations</text>
             </svg>
           </div>
           <div class="body">
@@ -1200,46 +1185,32 @@
             <svg viewBox="0 0 340 200" xmlns="http://www.w3.org/2000/svg">
               <defs>
                 <marker id="arrC" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto">
-                  <path d="M0,0 L6,3.5 L0,7 Z" fill="currentColor" opacity="0.55"/>
+                  <path d="M0,0 L6,3.5 L0,7 Z" fill="currentColor" opacity="0.45"/>
                 </marker>
               </defs>
 
-              <!-- You (open, dashed) -->
-              <circle cx="40" cy="100" r="26" fill="none" stroke="currentColor" stroke-width="1" stroke-dasharray="4 3" opacity="0.48"/>
-              <text class="lbl-dim" x="40" y="96" text-anchor="middle">you</text>
-              <text class="lbl-dim" x="40" y="112" text-anchor="middle">?</text>
+              <!-- You (dashed) -->
+              <circle cx="52" cy="100" r="28" fill="none" stroke="currentColor" stroke-width="1" stroke-dasharray="4 3" opacity="0.45"/>
+              <text class="lbl-dim" x="52" y="96" text-anchor="middle">you</text>
+              <text class="lbl-dim" x="52" y="112" text-anchor="middle">?</text>
 
-              <!-- Connection -->
-              <line class="edge-a" x1="66" y1="100" x2="128" y2="100" marker-end="url(#arrC)" stroke-dasharray="4 3"/>
-              <text class="lbl-a" x="97" y="92" text-anchor="middle">+</text>
+              <!-- Arrow -->
+              <line class="edge-a" x1="80" y1="100" x2="124" y2="100" stroke-dasharray="4 3" marker-end="url(#arrC)"/>
+              <text class="lbl-a" x="102" y="92" text-anchor="middle">+</text>
 
-              <!-- Seungheon center -->
-              <circle cx="158" cy="100" r="28" fill="oklch(0.86 0.18 138 / .10)" stroke="var(--accent-2)" stroke-width="1"/>
-              <text class="lbl-a" x="158" y="97" text-anchor="middle">S.Lee</text>
-              <text class="lbl-dim" x="158" y="112" text-anchor="middle">AE · AI</text>
+              <!-- Seungheon -->
+              <circle cx="162" cy="100" r="34" fill="oklch(0.86 0.18 138 / .10)" stroke="var(--accent-2)" stroke-width="1"/>
+              <text class="lbl-a" x="162" y="96" text-anchor="middle">S.Lee</text>
+              <text class="lbl-dim" x="162" y="113" text-anchor="middle">AE · AI</text>
 
-              <!-- Topic nodes -->
-              <rect class="node-a" x="212" y="10"  width="116" height="22" rx="3"/>
-              <text class="lbl-dim" x="270" y="25"  text-anchor="middle">perception</text>
+              <!-- Lines to topics -->
+              <line class="edge" x1="196" y1="82" x2="226" y2="50"/>
+              <line class="edge" x1="196" y1="100" x2="226" y2="100"/>
+              <line class="edge" x1="196" y1="118" x2="226" y2="150"/>
 
-              <rect class="node"   x="214" y="48"  width="112" height="22" rx="3"/>
-              <text class="lbl-dim" x="270" y="63"  text-anchor="middle">edge inference</text>
-
-              <rect class="node"   x="216" y="89"  width="110" height="22" rx="3"/>
-              <text class="lbl-dim" x="271" y="104" text-anchor="middle">autonomy tools</text>
-
-              <rect class="node"   x="214" y="130" width="112" height="22" rx="3"/>
-              <text class="lbl-dim" x="270" y="145" text-anchor="middle">robotics · control</text>
-
-              <rect class="node"   x="214" y="168" width="112" height="22" rx="3"/>
-              <text class="lbl-dim" x="270" y="183" text-anchor="middle">applied AI research</text>
-
-              <!-- Edges to topics -->
-              <line class="edge" x1="184" y1="76" x2="212" y2="24"/>
-              <line class="edge" x1="186" y1="86" x2="214" y2="58"/>
-              <line class="edge" x1="186" y1="100" x2="216" y2="100"/>
-              <line class="edge" x1="186" y1="114" x2="214" y2="138"/>
-              <line class="edge" x1="184" y1="122" x2="212" y2="174"/>
+              <text class="lbl-dim" x="230" y="54" text-anchor="start">perception · robotics</text>
+              <text class="lbl-dim" x="230" y="104" text-anchor="start">edge inference</text>
+              <text class="lbl-dim" x="230" y="154" text-anchor="start">applied AI research</text>
             </svg>
           </div>
           <div class="body">
