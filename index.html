@@ -463,16 +463,6 @@
   .paperlinks .pdf{margin-left:auto;color:var(--accent);font-size:11px}
   .paperlinks .muted{padding:6px 8px;color:var(--fg-4);display:flex;gap:8px;align-items:baseline}
   @media (max-width: 1100px){
-    .shell{grid-template-columns: 1fr}
-    aside{position:relative;height:auto;border-right:none;border-bottom:1px solid var(--line);flex-direction:row;flex-wrap:wrap;gap:14px 18px;padding:14px 24px;align-items:center}
-    aside .brand{margin:0}
-    aside .status{margin:0}
-    aside nav.primary{margin:0;flex:1 1 100%;display:flex;align-items:center;gap:10px}
-    aside nav.primary .label{margin:0;flex-shrink:0}
-    aside nav.primary ul{flex-direction:row;flex-wrap:nowrap;gap:4px;overflow-x:auto;-webkit-overflow-scrolling:touch;flex:1}
-    aside nav.primary a{flex-shrink:0}
-    aside nav.primary a::before{display:none}
-    aside .side-block, aside .side-foot{display:none}
     section{padding:80px 32px}
     .hero{grid-template-columns: 1fr}
     .bio{grid-template-columns: 1fr}
@@ -483,6 +473,37 @@
     .res-toc{position:relative;top:auto}
     .contact{grid-template-columns: 1fr}
     .skillgrid{grid-template-columns: 1fr}
+  }
+  @media (max-width: 768px){
+    /* topbar: avatar + horizontally-scrollable nav in one row */
+    header.topbar{transition:none;overflow:hidden}
+    .topbar-inner{padding:8px 16px;gap:10px;transition:none;overflow:hidden}
+    .topbar.compact .topbar-inner{padding:8px 16px}
+    .topbar .brand-meta{display:none}
+    .topbar .brand{max-width:44px;gap:0;flex-shrink:0}
+    /* disable compact absolute-centering on mobile */
+    .topbar.compact nav.primary{
+      position:static !important;
+      transform:none !important;
+      transition:none !important;
+      margin:0 0 0 auto
+    }
+    nav.primary{flex:1 1 auto;min-width:0;margin:0 0 0 auto}
+    nav.primary ul{overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;flex-wrap:nowrap;justify-content:flex-end}
+    nav.primary ul::-webkit-scrollbar{display:none}
+    /* sections */
+    section{padding:56px 20px}
+    footer.page-foot{padding:28px 20px;flex-direction:column;gap:6px;align-items:flex-start}
+    /* hero */
+    h2.name{font-size:clamp(36px,10vw,60px)}
+    .kicker{font-size:16px}
+    /* hide SVG diagrams — text inside becomes illegible at mobile scale */
+    .proj .art{display:none}
+    /* awards row fits 2-col on narrow screen */
+    .awrow{grid-template-columns:80px 1fr;gap:12px}
+    .awtag{display:none}
+    /* contact channels */
+    .ch{grid-template-columns:70px 1fr auto;gap:10px}
   }
 </style>
 </head>
@@ -1188,22 +1209,28 @@ window.addEventListener('scroll', onScroll, {passive:true}); onScroll();
 const topbar = document.getElementById('topbar');
 let lastCompact = false;
 function onTopbarScroll(){
-  const should = window.scrollY > 80;
+  const y = window.scrollY;
+  // hysteresis: activate at 80px, deactivate at 50px — prevents oscillation near threshold
+  const should = lastCompact ? y > 50 : y > 80;
   if(should !== lastCompact){
     const nav = topbar.querySelector('nav.primary');
     if(should){
-      // measure how far nav center is from topbar center before going compact
-      const navRect = nav.getBoundingClientRect();
-      const barRect = topbar.getBoundingClientRect();
-      const offset = (navRect.left + navRect.width / 2) - (barRect.left + barRect.width / 2);
-      topbar.classList.add('compact');
-      // start at old position, then slide to true center
-      nav.style.transition = 'none';
-      nav.style.transform = `translateX(calc(-50% + ${offset}px))`;
-      requestAnimationFrame(() => requestAnimationFrame(() => {
-        nav.style.transition = 'transform .5s cubic-bezier(.4,0,.2,1)';
-        nav.style.transform = 'translateX(-50%)';
-      }));
+      if(window.innerWidth > 768){
+        // desktop: animate slide to center
+        const navRect = nav.getBoundingClientRect();
+        const barRect = topbar.getBoundingClientRect();
+        const offset = (navRect.left + navRect.width / 2) - (barRect.left + barRect.width / 2);
+        topbar.classList.add('compact');
+        nav.style.transition = 'none';
+        nav.style.transform = `translateX(calc(-50% + ${offset}px))`;
+        requestAnimationFrame(() => requestAnimationFrame(() => {
+          nav.style.transition = 'transform .5s cubic-bezier(.4,0,.2,1)';
+          nav.style.transform = 'translateX(-50%)';
+        }));
+      } else {
+        // mobile: just add class, CSS overrides handle positioning
+        topbar.classList.add('compact');
+      }
     } else {
       topbar.classList.remove('compact');
       nav.style.transition = '';
