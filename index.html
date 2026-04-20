@@ -1190,7 +1190,25 @@ let lastCompact = false;
 function onTopbarScroll(){
   const should = window.scrollY > 80;
   if(should !== lastCompact){
-    topbar.classList.toggle('compact', should);
+    const nav = topbar.querySelector('nav.primary');
+    if(should){
+      // measure how far nav center is from topbar center before going compact
+      const navRect = nav.getBoundingClientRect();
+      const barRect = topbar.getBoundingClientRect();
+      const offset = (navRect.left + navRect.width / 2) - (barRect.left + barRect.width / 2);
+      topbar.classList.add('compact');
+      // start at old position, then slide to true center
+      nav.style.transition = 'none';
+      nav.style.transform = `translateX(calc(-50% + ${offset}px))`;
+      requestAnimationFrame(() => requestAnimationFrame(() => {
+        nav.style.transition = 'transform .5s cubic-bezier(.4,0,.2,1)';
+        nav.style.transform = 'translateX(-50%)';
+      }));
+    } else {
+      topbar.classList.remove('compact');
+      nav.style.transition = '';
+      nav.style.transform = '';
+    }
     lastCompact = should;
   }
 }
