@@ -76,7 +76,7 @@
     display:flex;align-items:center;gap:20px;
     transition:padding .5s cubic-bezier(.4,0,.2,1);
   }
-  .topbar.compact .topbar-inner{padding:10px 56px 10px 56px}
+  .topbar.compact .topbar-inner{padding:10px 56px 10px 56px;position:relative}
   /* push nav toward center when compact by widening right padding-like spacer via brand */
   .topbar .brand{display:flex;align-items:center;gap:12px;margin:0;flex-shrink:0;transition:max-width .5s cubic-bezier(.4,0,.2,1);max-width:260px;overflow:hidden}
   /* in compact mode, brand grows invisibly to push nav to center: brand(52 avatar + phantom) */
@@ -142,9 +142,11 @@
   }
 
   nav.primary{margin:0 0 0 auto;min-width:0}
-  .topbar-spacer{flex-shrink:0;width:0;transition:width .5s cubic-bezier(.4,0,.2,1)}
-  /* in compact mode, spacer grows to equal (brand-meta + status collapsed widths) / 2 pushing nav toward center */
-  .topbar.compact .topbar-spacer{width:240px}
+  .topbar-spacer{flex-shrink:0;width:0}
+  .topbar.compact nav.primary{
+    position:absolute;left:50%;transform:translateX(-50%);
+    margin:0;
+  }
   nav.primary .label{display:none}
   nav.primary ul{list-style:none;display:flex;flex-direction:row;gap:2px;justify-content:flex-end;flex-wrap:nowrap}
   nav.primary a{
