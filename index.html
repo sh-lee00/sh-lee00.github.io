@@ -1452,10 +1452,12 @@ if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
       beeEl.style.transform =
         `translate(${bx - 11 + wx}px, ${by - 11 + wy}px) rotate(${wr}deg)`;
     } else {
-      /* face toward the honey pot */
-      const ang = Math.atan2(dy, dx) * 180 / Math.PI;
-      beeEl.style.transform =
-        `translate(${bx - 11}px, ${by - 11}px) rotate(${ang}deg)`;
+      /* face toward the honey pot — flip horizontally when moving left */
+      const facingLeft = dx < 0;
+      const tilt = Math.atan2(dy, Math.abs(dx)) * 180 / Math.PI;
+      beeEl.style.transform = facingLeft
+        ? `translate(${bx-11}px,${by-11}px) scaleX(-1) rotate(${tilt}deg)`
+        : `translate(${bx-11}px,${by-11}px) rotate(${tilt}deg)`;
     }
 
     requestAnimationFrame(loop);
