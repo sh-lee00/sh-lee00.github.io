@@ -516,6 +516,58 @@
     .tl-body{display:none}
     .res-tab{padding:20px 20px}
   }
+
+  /* ——— Bee cursor (desktop / pointer device only) ——— */
+  @media (hover: hover) and (pointer: fine) {
+    *, *::before, *::after { cursor: none !important; }
+
+    #cursor-honey {
+      position: fixed; top: 0; left: 0;
+      width: 10px; height: 14px;
+      background: oklch(0.82 0.16 70);
+      border-radius: 50% 50% 50% 50% / 35% 35% 65% 65%;
+      pointer-events: none; z-index: 99999;
+      will-change: transform;
+      filter: drop-shadow(0 1px 4px oklch(0.65 0.14 70 / .7));
+      transition: background .15s, width .15s, height .15s;
+    }
+    #cursor-honey.hovered {
+      width: 14px; height: 18px;
+      background: oklch(0.88 0.18 70);
+    }
+    #cursor-bee {
+      position: fixed; top: 0; left: 0;
+      font-size: 22px; line-height: 1;
+      pointer-events: none; z-index: 99998;
+      will-change: transform;
+      filter: drop-shadow(0 2px 5px oklch(0 0 0 / .45));
+    }
+    .honey-trail {
+      position: fixed;
+      width: 5px; height: 7px;
+      background: oklch(0.82 0.16 70 / .5);
+      border-radius: 50% 50% 50% 50% / 35% 35% 65% 65%;
+      pointer-events: none; z-index: 99996;
+      transform: translate(-50%, -50%);
+      animation: honey-trail-fade .65s ease-out forwards;
+    }
+    @keyframes honey-trail-fade {
+      0%   { opacity: .7; transform: translate(-50%,-50%) scale(1); }
+      100% { opacity: 0;  transform: translate(-50%,-50%) scale(.2); }
+    }
+    .honey-splat {
+      position: fixed;
+      width: 8px; height: 10px;
+      background: oklch(0.82 0.16 70);
+      border-radius: 50% 50% 50% 50% / 35% 35% 65% 65%;
+      pointer-events: none; z-index: 99997;
+      animation: honey-splat-anim .65s ease-out forwards;
+    }
+    @keyframes honey-splat-anim {
+      0%   { opacity: 1; transform: translate(-50%,-50%) scale(1.2); }
+      100% { opacity: 0; transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) scale(.15); }
+    }
+  }
 </style>
 </head>
 <body>
@@ -1346,6 +1398,73 @@ const barIO = new IntersectionObserver((entries)=>{
   });
 },{threshold:.2});
 document.querySelectorAll('.skillgroup').forEach(el=>barIO.observe(el));
+
+/* ——— Bee cursor ——— */
+if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+  const honeyEl = document.createElement('div');
+  honeyEl.id = 'cursor-honey';
+  document.body.appendChild(honeyEl);
+
+  const beeEl = document.createElement('div');
+  beeEl.id = 'cursor-bee';
+  beeEl.textContent = '🐝';
+  document.body.appendChild(beeEl);
+
+  let mx = window.innerWidth / 2, my = window.innerHeight / 2;
+  let bx = mx, by = my;
+  let lastTrail = 0;
+
+  document.addEventListener('mousemove', e => {
+    mx = e.clientX;
+    my = e.clientY;
+    honeyEl.style.transform = `translate(${mx - 5}px, ${my - 7}px)`;
+  });
+
+  /* hover state on clickable elements */
+  document.querySelectorAll('a, button').forEach(el => {
+    el.addEventListener('mouseenter', () => honeyEl.classList.add('hovered'));
+    el.addEventListener('mouseleave', () => honeyEl.classList.remove('hovered'));
+  });
+
+  /* click: honey splatter */
+  document.addEventListener('click', e => {
+    const count = 7;
+    for (let i = 0; i < count; i++) {
+      const s = document.createElement('div');
+      s.className = 'honey-splat';
+      const angle = (i / count) * Math.PI * 2 + Math.random() * .6;
+      const dist  = 22 + Math.random() * 28;
+      s.style.cssText = `left:${e.clientX}px;top:${e.clientY}px;`
+        + `--dx:${Math.cos(angle) * dist}px;--dy:${Math.sin(angle) * dist}px`;
+      document.body.appendChild(s);
+      setTimeout(() => s.remove(), 700);
+    }
+  });
+
+  /* bee follow loop with spring easing */
+  (function loop(t) {
+    bx += (mx - bx) * .09;
+    by += (my - by) * .09;
+
+    const dx = mx - bx, dy = my - by;
+    const angle = Math.atan2(dy, dx) * 180 / Math.PI;
+    const speed = Math.sqrt(dx * dx + dy * dy);
+
+    beeEl.style.transform =
+      `translate(${bx - 11}px, ${by - 11}px) rotate(${angle - 45}deg)`;
+
+    /* honey trail when moving fast enough */
+    if (t - lastTrail > 90 && speed > 6) {
+      lastTrail = t;
+      const tr = document.createElement('div');
+      tr.className = 'honey-trail';
+      tr.style.cssText = `left:${bx}px;top:${by}px`;
+      document.body.appendChild(tr);
+      setTimeout(() => tr.remove(), 700);
+    }
+    requestAnimationFrame(loop);
+  })(0);
+}
 </script>
 
 </body>
