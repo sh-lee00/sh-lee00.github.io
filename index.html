@@ -517,44 +517,6 @@
     .res-tab{padding:20px 20px}
   }
 
-  /* ——— Bee cursor (desktop / pointer device only) ——— */
-  @media (hover: hover) and (pointer: fine) {
-    *, *::before, *::after { cursor: none !important; }
-
-    #cursor-honey {
-      position: fixed; top: 0; left: 0;
-      font-size: 20px; line-height: 1;
-      pointer-events: none; z-index: 99999;
-      will-change: transform;
-      transition: filter .15s, transform .1s;
-      user-select: none;
-    }
-    #cursor-honey.hovered {
-      filter: drop-shadow(0 0 8px oklch(0.82 0.18 70 / .9));
-      animation: honey-pot-pulse .45s ease-in-out infinite alternate;
-    }
-    @keyframes honey-pot-pulse {
-      from { transform: var(--hp-t) scale(1); }
-      to   { transform: var(--hp-t) scale(1.35); }
-    }
-    #cursor-bee {
-      position: fixed; top: 0; left: 0;
-      font-size: 22px; line-height: 1;
-      pointer-events: none; z-index: 99998;
-      will-change: transform;
-      user-select: none;
-    }
-    .honey-splat {
-      position: fixed; font-size: 10px; line-height: 1;
-      pointer-events: none; z-index: 99997;
-      animation: honey-splat-anim .65s ease-out forwards;
-      user-select: none;
-    }
-    @keyframes honey-splat-anim {
-      0%   { opacity: 1; transform: translate(-50%,-50%) scale(1.1); }
-      100% { opacity: 0; transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) scale(.2); }
-    }
-  }
 </style>
 </head>
 <body>
@@ -1385,84 +1347,6 @@ const barIO = new IntersectionObserver((entries)=>{
   });
 },{threshold:.2});
 document.querySelectorAll('.skillgroup').forEach(el=>barIO.observe(el));
-
-/* ——— Bee cursor ——— */
-if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
-  const honeyEl = document.createElement('div');
-  honeyEl.id = 'cursor-honey';
-  honeyEl.textContent = '🍯';
-  document.body.appendChild(honeyEl);
-
-  const beeEl = document.createElement('div');
-  beeEl.id = 'cursor-bee';
-  beeEl.textContent = '🐝';
-  document.body.appendChild(beeEl);
-
-  let mx = window.innerWidth / 2, my = window.innerHeight / 2;
-  let bx = mx, by = my;
-  let lastMoveTime = performance.now();
-
-  /* honey pot tracks mouse exactly */
-  document.addEventListener('mousemove', e => {
-    mx = e.clientX; my = e.clientY;
-    lastMoveTime = performance.now();
-    const t = `translate(${mx - 10}px, ${my - 10}px)`;
-    honeyEl.style.setProperty('--hp-t', t);
-    honeyEl.style.transform = t;
-  });
-
-  /* hover detection via delegation */
-  document.addEventListener('mouseover', e => {
-    if (e.target.closest('a, button')) honeyEl.classList.add('hovered');
-  });
-  document.addEventListener('mouseout', e => {
-    if (e.target.closest('a, button')) honeyEl.classList.remove('hovered');
-  });
-
-  /* click: honey splatter 🍯 drops */
-  document.addEventListener('click', e => {
-    for (let i = 0; i < 7; i++) {
-      const s = document.createElement('div');
-      s.className = 'honey-splat';
-      s.textContent = '🍯';
-      const ang  = (i / 7) * Math.PI * 2 + Math.random() * .5;
-      const dist = 24 + Math.random() * 30;
-      s.style.cssText = `left:${e.clientX}px;top:${e.clientY}px;`
-        + `--dx:${Math.cos(ang)*dist}px;--dy:${Math.sin(ang)*dist}px`;
-      document.body.appendChild(s);
-      setTimeout(() => s.remove(), 700);
-    }
-  });
-
-  /* bee: spring follow + rotation + idle wiggle */
-  (function loop(t) {
-    bx += (mx - bx) * .09;
-    by += (my - by) * .09;
-
-    const dx = mx - bx, dy = my - by;
-    const speed = Math.sqrt(dx*dx + dy*dy);
-    const idle = (performance.now() - lastMoveTime) > 380 && speed < 1.5;
-
-    if (idle) {
-      /* gentle figure-8 hover: collecting honey */
-      const p = t * 0.003;
-      const wx = Math.sin(p * 1.4) * 5;
-      const wy = Math.cos(p) * 3.5;
-      const wr = Math.sin(p * 0.8) * 14;
-      beeEl.style.transform =
-        `translate(${bx - 11 + wx}px, ${by - 11 + wy}px) rotate(${wr}deg)`;
-    } else {
-      /* face toward the honey pot — flip horizontally when moving left */
-      const facingLeft = dx < 0;
-      const tilt = Math.atan2(dy, Math.abs(dx)) * 180 / Math.PI;
-      beeEl.style.transform = facingLeft
-        ? `translate(${bx-11}px,${by-11}px) scaleX(-1) rotate(${tilt}deg)`
-        : `translate(${bx-11}px,${by-11}px) rotate(${tilt}deg)`;
-    }
-
-    requestAnimationFrame(loop);
-  })(0);
-}
 </script>
 
 </body>
